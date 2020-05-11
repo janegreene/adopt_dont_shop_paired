@@ -1,0 +1,16 @@
+<% @shelter = Shelter.find(params[:id]) %>
+<div class="container">
+
+
+<h1><%= link_to "#{@shelter.name}", "/shelters/#{@shelter.id}" %></h1>
+<%= link_to "View all pets from #{@shelter.name}", "/shelters/#{@shelter.id}/pets" %>
+<p><b>Address:</b> <%= @shelter.address %></p>
+<p><b>City:</b> <%= @shelter.city %></p>
+<p><b>State:</b> <%= @shelter.state %></p>
+<p><b>Zip:</b> <%= @shelter.zip %></p>
+
+
+<%= link_to 'Update Shelter', "/shelters/#{@shelter.id}/edit" %> |
+<%= link_to  "Delete Shelter", "/shelters/#{@shelter.id}", method: :delete, data: {confirm: "Confirm Sheleter Deletion"} %></br>
+
+<%= link_to 'Back to All Shelters', "/shelters" %></div>

@@ -1,0 +1,22 @@
+<div class="form_container">
+<h1>Update Shelter</h1>
+
+<%= form_tag "/shelters/#{@shelter.id}", method: :put do %>
+  <%= label_tag :name %><br/>
+  <%= text_field_tag :name, @shelter.name%><br/>
+
+  <%= label_tag :address %><br/>
+  <%= text_field_tag :address, @shelter.address%><br/>
+
+  <%= label_tag :city%><br/>
+  <%= text_field_tag :city, @shelter.city %><br/>
+
+  <%= label_tag :state %><br/>
+  <%= text_field_tag :state, @shelter.state%><br/>
+
+  <%= label_tag :zip %><br/>
+  <%= text_field_tag :zip, @shelter.zip %><br/>
+
+  <%= submit_tag 'Submit Update' %>
+<% end %>
+</div>

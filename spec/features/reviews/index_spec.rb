@@ -79,4 +79,28 @@ RSpec.describe "from shelter show page" do
     expect(current_path).to eq("/shelters/#{shelter.id}/#{review.id}/edit")
     expect(page).to have_content("Review not updated: Required information missing.")
   end
+
+  it "see a link to delete the shelter review next to each review" do
+    shelter = Shelter.create(name: "Find-a-Friend",
+                              address: "123 North Street",
+                              city: "Denver",
+                              state: "CO",
+                              zip: 80223 )
+    review = Review.create(title: "Excellent service",
+                           rating: 5,
+                           content: "Found a great pet for my family.",
+                           image: "https://images.unsplash.com/photo-1415369629372-26f2fe60c467?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60",
+                           shelter_id: shelter.id )
+
+    visit "/shelters/#{shelter.id}"
+
+    click_link "Delete Review"
+
+    expect(current_path).to eq("/shelters/#{shelter.id}")
+    expect(page).to_not have_content("Excellent service")
+    expect(page).to_not have_content(review.rating)
+    expect(page).to_not have_content("The dog we got from here is AMAZING!")
+    # page.find("#review-avatar-#{review.id}")['src'].should have_content review.image
+  end
+
 end

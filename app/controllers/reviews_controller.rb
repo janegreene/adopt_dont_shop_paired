@@ -4,10 +4,14 @@ class ReviewsController < ApplicationController
   end
 
   def create
-    shelter = Shelter.find(params[:id])
-    review = shelter.reviews.create!(review_params)
-
-    redirect_to "/shelters/#{shelter.id}"
+    @shelter = Shelter.find(params[:id])
+    review = @shelter.reviews.new(review_params)
+    if review.save
+        redirect_to "/shelters/#{@shelter.id}"
+    else
+        flash.now[:notice] = "Review not created: Required information missing."
+        render :new
+    end
   end
 
   def edit
@@ -15,10 +19,15 @@ class ReviewsController < ApplicationController
   end
 
   def update
+    @shelter = Shelter.find(params[:id])
     review = Review.find(params[:review_id])
-    review.update!(review_params)
-
-    redirect_to "/shelters/#{review.shelter_id}"
+    if review.valid?
+      review.update!(review_params)
+      redirect_to "/shelters/#{review.shelter_id}"
+    else
+      redirect_to "/shelters/#{review.shelter_id}/#{review.id}/edit" 
+      flash[:notice] = "Review not updated: Required information missing."
+    end
   end
 
   private

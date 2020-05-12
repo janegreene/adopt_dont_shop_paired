@@ -348,9 +348,9 @@
         1,
         1,
         1,
-        0,
-        0,
-        0,
+        1,
+        1,
+        1,
         null,
         null,
         null,
@@ -716,6 +716,12 @@
         null,
         null
       ],
+      "/Users/janegreene/turing/2module/projects/adopt_dont_shop_paired/app/models/review.rb": [
+        1,
+        1,
+        1,
+        null
+      ],
       "/Users/janegreene/turing/2module/projects/adopt_dont_shop_paired/app/controllers/reviews_controller.rb": [
         1,
         1,
@@ -735,12 +741,6 @@
         null,
         null
       ],
-      "/Users/janegreene/turing/2module/projects/adopt_dont_shop_paired/app/models/review.rb": [
-        1,
-        1,
-        1,
-        null
-      ],
       "/Users/janegreene/turing/2module/projects/adopt_dont_shop_paired/app/controllers/shelter_pets_controller.rb": [
         1,
         1,
@@ -750,6 +750,6 @@
         null
       ]
     },
-    "timestamp": 1589243258
+    "timestamp": 1589243716
   }
 }

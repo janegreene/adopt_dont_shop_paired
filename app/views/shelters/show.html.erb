@@ -9,7 +9,7 @@
 <p><b>State:</b> <%= @shelter.state %></p>
 <p><b>Zip:</b> <%= @shelter.zip %></p>
 
-
+<%= link_to 'Review', "/shelters/#{@shelter.id}/review" %> 
 <%= link_to 'Update Shelter', "/shelters/#{@shelter.id}/edit" %> |
 <%= link_to  "Delete Shelter", "/shelters/#{@shelter.id}", method: :delete, data: {confirm: "Confirm Sheleter Deletion"} %></br>
 

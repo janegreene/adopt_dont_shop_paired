@@ -1,0 +1,19 @@
+<div class="form_container">
+<h1>Create a New Review</h1>
+
+<%= form_tag "/shelters/#{@shelter.id}/review" do %>
+
+<%= label_tag :title, "Title" %><br>
+<%= text_field_tag :title %><br>
+
+<%= label_tag :rating, "Rating" %><br>
+<%= text_field_tag :rating %><br>
+
+<%= label_tag :content, "Content" %><br>
+<%= text_field_tag :content %><br>
+
+<%= label_tag :image, "Image URL" %><br>
+<%= text_field_tag :image%><br>
+
+<%= submit_tag "Submit Review" %>
+<% end %>

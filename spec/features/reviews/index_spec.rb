@@ -42,7 +42,7 @@ RSpec.describe "from shelter show page" do
 
     click_link "Edit Review"
     expect(current_path).to eq("/shelters/#{shelter.id}/#{review.id}/edit")
-  
+
     fill_in "Content", with: "The dog we got from here is AMAZING!"
     fill_in "Rating", with: 1
 
@@ -55,7 +55,7 @@ RSpec.describe "from shelter show page" do
     page.find("#review-avatar-#{review.id}")['src'].should have_content review.image
   end
 
-  xit "see a link to edit the shelter review next to each review" do
+  it "see a link to edit the shelter review next to each review" do
     shelter = Shelter.create(name: "Find-a-Friend",
                               address: "123 North Street",
                               city: "Denver",
@@ -71,7 +71,7 @@ RSpec.describe "from shelter show page" do
 
     click_link "Edit Review"
     expect(current_path).to eq("/shelters/#{shelter.id}/#{review.id}/edit")
-  
+
     fill_in "Content", with: nil
 
     click_button "Submit Review"

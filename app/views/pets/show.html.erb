@@ -11,5 +11,7 @@
 
 <%= link_to "Update Pet", "/pets/#{@pet.id}/edit" %> |
 <%= link_to "Delete Pet", "/pets/#{@pet.id}", method: :delete, data: {confirm: "Confirm Pet Deletion"} %><br/><br/>
+<%= link_to "Favorite Pet", "/pets/#{@pet.id}", method: :post %><br/><br/>
+
 <%= link_to 'Back to All Pets', "/pets" %>
 </div>

@@ -3,7 +3,7 @@
 <%= form_tag "/shelters/#{@review.shelter_id}/#{@review.id}", method: :patch do %>
 
   <%= label_tag :title, "Title" %><br>
-  <%= text_field_tag :title, "#{@review.title}"%><br>
+  <%= text_field_tag :title, "#{@review.title}" %><br>
 
   <%= label_tag :rating, "Rating" %><br>
   <%= text_field_tag :rating, "#{@review.rating}"%><br>

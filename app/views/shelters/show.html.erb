@@ -19,6 +19,8 @@
 <p> <b>Content:</b> <%= review.content%> </p>
 <%= image_tag review.image, id: "review-avatar-#{review.id}"%>
 <%= link_to "Edit Review", "/shelters/#{@shelter.id}/#{review.id}/edit" %> |
+<%= link_to "Delete Review", "/shelters/#{@shelter.id}/#{review.id}", method: :delete, data: {confirm: "Confirm Review Deletion"} %></br>
+
 <% end %>
 
 <%= link_to 'Back to All Shelters', "/shelters" %></div>

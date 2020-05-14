@@ -87,6 +87,40 @@ RSpec.describe "When I have add pets to my favorites list" do
         expect(page).to have_content("You have no favorited pets.")
       end
     end
+
+    it "can click link to remove all pets from favorites" do
+        visit "/pets/#{@pet1.id}"
+
+        within(".column-#{@pet1.id}") do
+            click_button "Favorite Pet"
+        end
+        
+        visit "/pets/#{@pet2.id}"
+
+        within(".column-#{@pet2.id}") do
+            click_button "Favorite Pet"
+        end
+
+        visit "/favorites"
+
+        expect(page).to have_link("Remove All Favorited Pets")
+        
+        click_link "Remove All Favorited Pets"
+      
+        expect(current_path).to eq("/favorites")
+        expect(page).to have_content("You have no favorited pets.")
+        expect(page).to_not have_link("Remove All Favorited Pets")
+    end
   end
 end
 
+# User Story 15, Remove all Favorite from Favorites Page
+
+# As a visitor
+# When I have added pets to my favorites list
+# And I visit my favorites page ("/favorites")
+# I see a link to remove all favorited pets
+# When I click that link
+# I'm redirected back to the favorites page
+# I see the text saying that I have no favorited pets
+# And the favorites indicator returns to 0

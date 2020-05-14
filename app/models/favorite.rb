@@ -26,4 +26,8 @@ class Favorite
   def favorite_pets
     @contents.keys.map {|id| Pet.find(id)}
   end
+
+  def delete(id)
+    @contents.delete(id.to_s)
+  end
 end

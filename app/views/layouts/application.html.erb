@@ -13,12 +13,14 @@
       <center>Adopt Don't Shop
       <%= link_to "All Pets", "/pets" %>
       <%= link_to "All Shelters", "/shelters" %>
+      <p>Favorite Pets: <%= favorite.total_count %></p>
+
     </div>
 
     <% flash.each do |type, message| %>
       <p><%= message %></p>
     <% end %>
-    
+
     <%= yield %>
   </body>
 </html>

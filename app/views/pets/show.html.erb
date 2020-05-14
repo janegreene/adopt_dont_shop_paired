@@ -1,17 +1,17 @@
 <% @pet = Pet.find(params[:id]) %>
 <div class="row">
-  <div class="pet_container"><div class="column"><br/>
+  <div class="pet_container-<%= @pet.id %>"><div class="column"><br/>
     <img class = "pet_img" src = "<%= @pet.image %>" alt:="<%= @pet.name %>" <br/>
 <h2><%= link_to "#{@pet.name}", "/pets/#{@pet.id}" %> </h2><br/></div>
 </div><br/>
-<div class="column"><p><b>Description:</b> <%= @pet.description %></p>
+<div class="column-<%= @pet.id %>"><p><b>Description:</b> <%= @pet.description %></p>
 <p><b>Age:</b> <%= @pet.age %></p>
 <p><b>Sex:</b> <%= @pet.sex %></p>
 <p><b>Adoption Status:</b> <%= @pet.status %></p>
 
 <%= link_to "Update Pet", "/pets/#{@pet.id}/edit" %> |
 <%= link_to "Delete Pet", "/pets/#{@pet.id}", method: :delete, data: {confirm: "Confirm Pet Deletion"} %><br/><br/>
-<%= link_to "Favorite Pet", "/pets/#{@pet.id}", method: :post %><br/><br/>
+<%= button_to "Favorite Pet", "/favorites/#{@pet.id}", method: :patch %> <br/><br/>
 
 <%= link_to 'Back to All Pets', "/pets" %>
 </div>

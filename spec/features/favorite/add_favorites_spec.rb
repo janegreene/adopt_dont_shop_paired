@@ -66,9 +66,14 @@ RSpec.describe "When I visit a pet's show page" do
 
   visit "/pets/#{pet1.id}"
 
+  expect(page).to have_content("Favorite Pets: 0")
+
   within(".column-#{pet1.id}") do
     click_button "Favorite Pet"
   end
+
+  expect(page).to have_content("Favorite Pets: 1")
+
   visit "/pets/#{pet2.id}"
 
   within(".column-#{pet2.id}") do
@@ -77,6 +82,8 @@ RSpec.describe "When I visit a pet's show page" do
   # save_and_open_page
 
   visit "/pets/#{pet3.id}"
+
+  expect(page).to have_content("Favorite Pets: 2")
 
   within(".column-#{pet3.id}") do
     click_button "Favorite Pet"
@@ -191,7 +198,10 @@ RSpec.describe "When I visit a pet's show page" do
 
        click_button "Remove From Favorites"
       
+       expect(page).to have_content("Favorite Pets: 0")
+       
        visit "/pets/#{pet1.id}"
+         
        expect(current_path).to eq("/pets/#{pet1.id}")
        expect(page).to_not have_button("Remove From Favorites")
      end

@@ -13,7 +13,21 @@ class Favorite
     @contents[id.to_s] = count_of(id) + 1
   end
 
+  def add_pet?(id)
+    if !@contents.keys.include?(id.to_s)
+      add_pet(id)
+    end
+  end
+
   def count_of(id)
     @contents[id.to_s].to_i
+  end
+
+  def favorite_pets
+    @contents.keys.map {|id| Pet.find(id)}
+  end
+
+  def delete(id)
+    @contents.delete(id.to_s)
   end
 end

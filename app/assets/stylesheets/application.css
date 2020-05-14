@@ -130,3 +130,7 @@ label {
 .column {
   flex: 50%;
 }
+
+.fav_pet {
+  width: 50%;
+}

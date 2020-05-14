@@ -10,6 +10,4 @@
 <p> <b>Sex:</b> <%= pet.sex %> </p>
 <p> <b>Located at:</b> <%= link_to "#{pet.shelter.name}", "/shelters/#{pet.shelter.id}" %> </p>
 <% end %>
-
-<%= link_to 'Back to Shelters', "/shelters/:id" %>
 </div>

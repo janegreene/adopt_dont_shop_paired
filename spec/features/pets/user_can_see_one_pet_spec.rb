@@ -40,9 +40,10 @@ RSpec.describe "user sees one pet" do
                       status: "Adoptable"
                     )
     visit "/pets/#{pet1.id}"
-    click_link "Favorite Pet"
+    click_button "Favorite Pet"
 
     expect(current_path).to eq("/pets/#{pet1.id}")
-    expect(page).to have_content("You've favorited #{pet1.name}")
+    expect(page).to have_content("You have favorited #{pet1.name}.")
   end
 end
+# rails g migration RemoveFavoriteFromPets favorite:boolean

@@ -13,6 +13,12 @@ class Favorite
     @contents[id.to_s] = count_of(id) + 1
   end
 
+  def add_pet?(id)
+    if !@contents.keys.include?(id.to_s)
+      add_pet(id)
+    end
+  end
+
   def count_of(id)
     @contents[id.to_s].to_i
   end

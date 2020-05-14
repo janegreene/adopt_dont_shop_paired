@@ -48,7 +48,7 @@ RSpec.describe "When I have add pets to my favorites list" do
          visit "/favorites"
 
          expect(current_path).to eq("/favorites")
-         expect(page).to have_content(pet1.name)
+          expect(page).to have_content(pet1.name)
          expect(page).to have_content(pet2.name)
          expect(page).to_not have_content(pet3.name)
     end

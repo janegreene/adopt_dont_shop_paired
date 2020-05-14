@@ -1,0 +1,33 @@
+<div class="form_container">
+<h1>Create a New Application</h1>
+
+<%= form_tag "/applications/new" do %>
+
+<%= label_tag :pets, "Pets" %><br>
+
+<%= select_tag 'pet_ids[]', options_for_select(favorite.favorite_pets.map {|pet| [pet.name, pet.id]}), multiple: :true, required: :true %>
+
+<%= label_tag :name, "Name" %><br>
+<%= text_field_tag :name %><br>
+
+<%= label_tag :address, "Address" %><br>
+<%= text_field_tag :address %><br>
+
+<%= label_tag :city, "City" %><br>
+<%= text_field_tag :city %><br>
+
+<%= label_tag :state, "State" %><br>
+<%= text_field_tag :state%><br>
+
+<%= label_tag :zip, "Zip" %><br>
+<%= text_field_tag :zip%><br>
+
+<%= label_tag :phone, "Phone" %><br>
+<%= text_field_tag :phone%><br>
+
+<%= label_tag :description, "Description" %><br>
+<%= text_field_tag :description%><br>
+
+<%= submit_tag "Submit Application" %>
+<% end %>
+</div>

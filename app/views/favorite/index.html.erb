@@ -1,6 +1,8 @@
 <h1>Favorite Pets</h1>
 
 <% favorite.favorite_pets.each do |pet| %>
+     <div class="pet_container-<%= pet.id %>"><div class="column"><br/>
 <img src = "<%= pet.image %>" alt:="<%= pet.name %>" <br/>
 <h2><%= link_to "#{pet.name}", "/pets/#{pet.id}" %> </h2>
-<% end %>
+<%= button_to "Remove Favorite", "/favorites/#{pet.id}?page=favorites", method: :delete %>
+<% end %></div>

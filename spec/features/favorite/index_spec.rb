@@ -80,5 +80,13 @@ RSpec.describe "When I have add pets to my favorites list" do
         #   click_button "Remove Favorite"
         # end
     end
+
+    describe "when I have no favorite pets" do
+      it "shows a message saying I have no favorites" do
+        visit "/favorites"
+        expect(page).to have_content("You have no favorited pets.")
+      end
+    end
   end
 end
+

@@ -30,4 +30,5 @@ class Favorite
   def delete(id)
     @contents.delete(id.to_s)
   end
+  
 end

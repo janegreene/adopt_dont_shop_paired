@@ -12,15 +12,15 @@
 <%= link_to 'Review', "/shelters/#{@shelter.id}/review" %>
 <%= link_to 'Update Shelter', "/shelters/#{@shelter.id}/edit" %> |
 <%= link_to  "Delete Shelter", "/shelters/#{@shelter.id}", method: :delete, data: {confirm: "Confirm Sheleter Deletion"} %></br>
-
 <% @shelter.reviews.each do |review| %>
+<div class=“review-<%= review.id %>“>
 <p> <b>Title:</b> <%= review.title %> </p>
 <p> <b>Rating:</b> <%= review.rating%> </p>
 <p> <b>Content:</b> <%= review.content%> </p>
 <%= image_tag review.image, id: "review-avatar-#{review.id}"%>
 <%= link_to "Edit Review", "/shelters/#{@shelter.id}/#{review.id}/edit" %> |
 <%= link_to "Delete Review", "/shelters/#{@shelter.id}/#{review.id}", method: :delete, data: {confirm: "Confirm Review Deletion"} %></br>
-
+</div>
 <% end %>
 
 <%= link_to 'Back to All Shelters', "/shelters" %></div>

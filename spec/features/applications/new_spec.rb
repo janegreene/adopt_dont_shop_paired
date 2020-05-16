@@ -47,8 +47,10 @@ before(:each) do
     click_button "Submit Application"
     expect(current_path).to eq("/favorites")
     expect(page).to have_content("You have submitted your application to adopt.") #needs rework
-    expect(page).to_not have_content("#{@pet1.name}")
-    expect(page).to_not have_content("#{@pet2.name}")
+    within '.favorites' do
+      expect(page).to_not have_content("#{@pet1.name}")
+      expect(page).to_not have_content("#{@pet2.name}")
+    end
   end
   it "incomplete application" do
     visit "/pets/#{@pet1.id}"

@@ -1,6 +1,7 @@
 class FavoriteController < ApplicationController
   def index
     @favorites = favorite.favorite_pets
+    @apps = Application.all
   end
 
   def update
@@ -29,5 +30,3 @@ class FavoriteController < ApplicationController
     redirect_to '/favorites'
   end
 end
-
-

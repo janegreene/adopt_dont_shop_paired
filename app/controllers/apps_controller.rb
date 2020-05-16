@@ -6,7 +6,7 @@ class AppsController < ApplicationController
 
   def index
     @applications = Application.all
-    require "pry"; binding.pry
+    # require "pry"; binding.pry
   end
 
   def create
@@ -17,6 +17,7 @@ class AppsController < ApplicationController
       redirect_to "/favorites"
 
       params[:pet_ids].each do |id|
+        @pet_apps = PetApplication.create(pet_id: id, application_id: application.id)
         session[:favorite].delete(id.to_s)
       end
     else

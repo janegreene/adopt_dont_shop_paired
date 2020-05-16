@@ -118,7 +118,7 @@ RSpec.describe "When I have add pets to my favorites list" do
       description: "great fenced yard", pet_ids: ["#{@pet1.id}", "#{@pet2.id}"])
 
       visit "/favorites"
-      within(".apps-#{@pet1.id}") do
+      within(".apps") do
         have_link "#{@pet1.name}", href: "/pets/#{@pet1.id}"
       end
   end

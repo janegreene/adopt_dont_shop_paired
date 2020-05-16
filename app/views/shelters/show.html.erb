@@ -13,7 +13,7 @@
 <%= link_to 'Update Shelter', "/shelters/#{@shelter.id}/edit" %> |
 <%= link_to  "Delete Shelter", "/shelters/#{@shelter.id}", method: :delete, data: {confirm: "Confirm Sheleter Deletion"} %></br>
 <% @shelter.reviews.each do |review| %>
-<div class=“review-<%= review.id %>“>
+<div class="review-<%= review.id %>" >
 <p> <b>Title:</b> <%= review.title %> </p>
 <p> <b>Rating:</b> <%= review.rating%> </p>
 <p> <b>Content:</b> <%= review.content%> </p>

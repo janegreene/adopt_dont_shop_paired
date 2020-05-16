@@ -9,6 +9,7 @@
         <h2><%= link_to "#{pet.name}", "/pets/#{pet.id}" %> </h2>
         <%= button_to "Remove Favorite", "/favorites/#{pet.id}?page=favorites", method: :delete %>
 <% end %>
+
 <%= link_to "Adopt Favorite Pets", "/applications/new" %>
 <%= link_to "Remove All Favorited Pets", "/favorites", method: :delete %>
 <% end %></div>

@@ -25,6 +25,10 @@ class AppsController < ApplicationController
       render :new
     end
   end
+
+  def show
+    @app = Application.find(params[:id])
+  end
   # def create
   #   @apps = Application.create
   #     params[:pet_ids].each do |id|

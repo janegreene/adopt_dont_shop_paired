@@ -1,10 +1,16 @@
 <div class="container">
-<% @pet = Pet.find(params[:id]) %>
+
+<% if @pet.status == "Pending" %>
+    <% @pet.applications.each do |app| %>
+    <p> On hold for <%= app.name %>. </p>
+  <% end %>
+<% end %>
+
 <div class="row">
-  <div class="pet_container-<%= @pet.id %>"><div class="column"><br/>
+  <div class="pet_container-<%= @pet.id %>">
     <img class = "pet_img" src = "<%= @pet.image %>" alt:="<%= @pet.name %>" <br/>
-<h2><%= link_to "#{@pet.name}", "/pets/#{@pet.id}" %> </h2><br/></div>
-</div><br/>
+<h2><%= link_to "#{@pet.name}", "/pets/#{@pet.id}" %> </h2><br/></div></div>
+
 <div class="column-<%= @pet.id %>"><p><b>Description:</b> <%= @pet.description %></p>
 <p><b>Age:</b> <%= @pet.age %></p>
 <p><b>Sex:</b> <%= @pet.sex %></p>
@@ -22,4 +28,5 @@
     <%= button_to "Remove From Favorites", "/favorites/#{@pet.id}?page=show", method: :delete %>
 <%= link_to 'Back to All Pets', "/pets" %>
 
-  <% end %></div>
+  <% end %></div></div>
+

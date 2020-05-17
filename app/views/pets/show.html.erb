@@ -14,6 +14,8 @@
 <%= link_to "Delete Pet", "/pets/#{@pet.id}", method: :delete, data: {confirm: "Confirm Pet Deletion"} %><br/><br/>
 <%= link_to 'Back to All Pets', "/pets" %>
 
+<%= link_to "View all Applications", "/pets/#{@pet.id}/applications" %>
+
 <% if favorite.contents[@pet.id.to_s].nil? || favorite.contents[@pet.id.to_s] == 0 %>
       <%= button_to "Favorite Pet", "/favorites/#{@pet.id}", method: :patch %>
   <% else %>

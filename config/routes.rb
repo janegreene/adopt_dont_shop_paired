@@ -18,7 +18,6 @@ Rails.application.routes.draw do
   get '/pets/:id/edit', to: 'pets#edit'
   patch '/pets/:id', to: 'pets#update'
   delete '/pets/:id', to: 'pets#destroy'
-  patch '/pets/:id/pending', to: 'pets#pending'
 
   get '/favorites', to: 'favorite#index'
   patch '/favorites/:pet_id', to: 'favorite#update'
@@ -31,6 +30,7 @@ Rails.application.routes.draw do
   get '/applications/new', to: 'apps#new'
   get '/applications/:id', to: 'apps#show'
   post '/applications/new', to: 'apps#create'
+  patch '/pets/:id/change_status', to: 'pets#change_status'
 
   get '/pets/:id/applications', to: 'pet_applications#index'
 end

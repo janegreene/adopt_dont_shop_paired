@@ -26,6 +26,10 @@ before(:each) do
     @application = Application.create(name: "Will Rogers",
       address: "132 Maple Dr.", city: "Claremore", state: "OK", zip: 74014, phone: "918-233-9000",
       description: "great fenced yard", pet_ids: ["#{@pet1.id}", "#{@pet2.id}"])
+
+      @application2 = Application.create(name: "Roger Will",
+      address: "132 Maple Dr.", city: "Claremore", state: "OK", zip: 74014, phone: "918-233-9000",
+      description: "great fenced yard", pet_ids: ["#{@pet1.id}", "#{@pet2.id}"])
   end
   it "can see all attributes of application" do
     visit "/applications/#{@application.id}"
@@ -54,17 +58,5 @@ before(:each) do
     expect(page).to have_content("Adoption Status: Pending")
     expect(page).to have_content("On hold for #{@application.name}.")
   end
-
 end
 
-
-
-# User Story 22, Approving an Application
-
-# As a visitor
-# When I visit an application's show page
-# For every pet that the application is for, I see a link to approve the application for that specific pet
-# When I click on a link to approve the application for one particular pet
-# I'm taken back to that pet's show page
-# And I see that the pets status has changed to 'pending'
-# And I see text on the page that says who this pet is on hold for (Ex: "On hold for John Smith", given John Smith is the name on the application that was just accepted)

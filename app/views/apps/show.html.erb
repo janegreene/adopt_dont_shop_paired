@@ -11,6 +11,6 @@
 <% @app.pets.each do |pet|%>
     <div class="pets-<%=pet.id %>">
 <%= link_to "#{pet.name}", "/pets/#{pet.id}" %> <br/>
-<%= link_to "Approve Application", "/pets/#{pet.id}/pending", method: :patch %>
+<%= link_to "Approve Application", "/pets/#{pet.id}/change_status", method: :patch %>
 </div>
 <%end%>

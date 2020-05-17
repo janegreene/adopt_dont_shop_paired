@@ -7,3 +7,4 @@ RSpec.describe PetApplication, type: :model do
   end
 end
 # rails g migration CreatePetApplications pet:references application:references
+# rails g migrations AddApprovedToPetApplications approved:boolean default:false

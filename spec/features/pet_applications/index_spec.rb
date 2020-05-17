@@ -35,7 +35,25 @@ before(:each) do
     expect(current_path).to eq("/pets/#{@pet1.id}/applications")
     have_link "#{@application.name}", href: "/applications/#{@application.id}"
   end
+  it "link to view all applications for this pet" do
+    pet3 = Pet.create(image: "https://ichef.bbci.co.uk/wwfeatures/live/976_549/images/live/p0/7z/n7/p07zn7p7.jpg",
+      name: "Randy",
+      age: "3",
+      sex: "Male",
+      shelter_id: @shelter1.id,
+      description: "Bites",
+      status: "Adoptable"
+    )
+    visit "/pets/#{pet3.id}/applications"
+
+    expect(page).to have_content("No applications for this pet yet.")
+  end
 end
+# User Story 21, Pet Applications Index Page When No Applications
+#
+# As a visitor
+# When I visit a pet applications index page for a pet that has no applications on them
+# I see a message saying that there are no applications for this pet yet
 # User Story 20, Pet Applications Index Page
 #
 # As a visitor

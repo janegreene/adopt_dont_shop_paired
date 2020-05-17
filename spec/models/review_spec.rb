@@ -7,8 +7,10 @@ RSpec.describe Review do
     it {should validate_presence_of :content}
 
   end
-  
+
   describe 'relationships' do
     it {should belong_to :shelter}
+    # it { should belong_to(:shelter).dependent(:destroy) }
+
   end
 end

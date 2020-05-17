@@ -65,4 +65,25 @@ RSpec.describe "create new shelter page", type: feature do
     expect(page).to have_content(shelter.state)
     expect(page).to have_content(shelter.zip)
   end
+it "can see message when field is missing create" do
+  visit '/shelters'
+
+  click_link "New Shelter"
+
+  fill_in "Name", with: "Doggone Crazy"
+  fill_in "Address", with: ""
+  fill_in "City", with: "Cincinnati"
+  fill_in "State", with: "OH"
+  fill_in "Zip", with: 41073
+
+  click_button "Create Shelter"
+  expect(page).to have_content("Sheleter not created. Required information missing: Address")#need to make dynamic
 end
+end
+
+# User Story 29, Flash Messages for Shelter Create and Update
+#
+# As a visitor
+# When I am updating or creating a new shelter
+# If I try to submit the form with incomplete information
+# I see a flash message indicating which field(s) I am missing

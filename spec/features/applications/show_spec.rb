@@ -26,10 +26,8 @@ before(:each) do
     @application = Application.create(name: "Will Rogers",
       address: "132 Maple Dr.", city: "Claremore", state: "OK", zip: 74014, phone: "918-233-9000",
       description: "great fenced yard", pet_ids: ["#{@pet1.id}", "#{@pet2.id}"])
-
   end
   it "can see all attributes of application" do
-
     visit "/applications/#{@application.id}"
 
     expect(page).to have_content("Will Rogers")
@@ -42,17 +40,32 @@ before(:each) do
     have_link 'Milo', href: "/pets/#{@pet1.id}"
     have_link 'Otis', href: "/pets/#{@pet2.id}"
   end
+
+  it "can click a link to approve the application" do
+    
+  visit "/applications/#{@application.id}"
+   
+  within(".pets-#{@pet1.id}") do
+    expect(page).to have_link("Approve Application")
+    click_link "Approve Application"
+  end
+    
+    expect(current_path).to eq("/pets/#{@pet1.id}")
+
+    expect(page).to have_content("Adoption Status: Pending")
+    expect(page).to have_content("On hold for #{@application.name}.")
+  end
+
 end
-# User Story 19, Application Show Page
-#
+
+
+
+# User Story 22, Approving an Application
+
 # As a visitor
-# When I visit an applications show page "/applications/:id"
-# I can see the following:
-# - name
-# - address
-# - city
-# - state
-# - zip
-# - phone number
-# - Description of why the applicant says they'd be a good home for this pet(s)
-# - names of all pet's that this application is for (all names of pets should be links to their show page)
+# When I visit an application's show page
+# For every pet that the application is for, I see a link to approve the application for that specific pet
+# When I click on a link to approve the application for one particular pet
+# I'm taken back to that pet's show page
+# And I see that the pets status has changed to 'pending'
+# And I see text on the page that says who this pet is on hold for (Ex: "On hold for John Smith", given John Smith is the name on the application that was just accepted)

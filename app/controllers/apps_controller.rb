@@ -20,6 +20,7 @@ class AppsController < ApplicationController
         @pet_apps = PetApplication.create(pet_id: id, application_id: application.id)
         session[:favorite].delete(id.to_s)
       end
+    
     else
       flash.now[:notice] = "Application not submitted: Required information missing."
       render :new
@@ -29,14 +30,8 @@ class AppsController < ApplicationController
   def show
     @app = Application.find(params[:id])
   end
-  # def create
-  #   @apps = Application.create
-  #     params[:pet_ids].each do |id|
-  #       session[:favorite].delete(id.to_s)
-  #     end
-  #   flash[:notice] = "You have submitted your application to adopt."
-  #   redirect_to "/favorites"
-  # end
+ 
+  
 
   private
 

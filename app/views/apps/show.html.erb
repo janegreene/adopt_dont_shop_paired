@@ -9,5 +9,8 @@
 
 <p><b>Pet(s):</b></p>
 <% @app.pets.each do |pet|%>
-<%= link_to "#{pet.name}", "/pets/#{pet.id}" %>
+    <div class="pets-<%=pet.id %>">
+<%= link_to "#{pet.name}", "/pets/#{pet.id}" %> <br/>
+<%= link_to "Approve Application", "/pets/#{pet.id}/pending", method: :patch %>
+</div>
 <%end%>

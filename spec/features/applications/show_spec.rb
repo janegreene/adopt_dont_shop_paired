@@ -22,15 +22,15 @@ RSpec.describe "the Application new page" do
                         shelter_id: @shelter1.id,
                         description: "Small white dog",
                         status: "Adoptable")
-    
+
     @application = Application.create(name: "Will Rogers",
       address: "132 Maple Dr.", city: "Claremore", state: "OK", zip: 74014, phone: "918-233-9000",
       description: "great fenced yard", pet_ids: ["#{@pet1.id}", "#{@pet2.id}"])
 
     @application2 = Application.create(name: "Roger Will",
       address: "132 Maple Dr.", city: "Claremore", state: "OK", zip: 74014, phone: "918-233-9000",
-      description: "great fenced yard", pet_ids: ["#{@pet1.id}", "#{@pet2.id}"])
-  
+      description: "great fenced yard", pet_ids: ["#{@pet1.id}"])
+
   end
 
   it "can see all attributes of application" do
@@ -47,17 +47,27 @@ RSpec.describe "the Application new page" do
     have_link 'Otis', href: "/pets/#{@pet2.id}"
   end
 
-  it "can click a link to approve the application" do  
-    visit "/applications/#{@application.id}"
-   
-    within(".pets-#{@pet1.id}") do
-      expect(page).to have_link("Approve Application")
-      click_link "Approve Application"
-    end
-    
+  it "can click a link to approve the application" do
+    visit "/applications/#{@application2.id}"
+    select("#{@pet1.name}")
+    # expect(page).to have_button("Approve Application")
+    click_button "Approve Application"
     expect(current_path).to eq("/pets/#{@pet1.id}")
+    expect(page).to have_content("Adoption Status: Pending")
+    expect(page).to have_content("On hold for #{@application2.name}.")
+  end
+  it "can click a link to approve the application v2" do
+
+    visit "/applications/#{@application.id}"
+
+    select("#{@pet1.name}")
+    select("#{@pet2.name}")
+
+    expect(page).to have_button("Approve Application")
+    click_button "Approve Application"
+    expect(current_path).to eq("/pets")
+    click_link "#{@pet1.name}"
     expect(page).to have_content("Adoption Status: Pending")
     expect(page).to have_content("On hold for #{@application.name}.")
   end
 end
-

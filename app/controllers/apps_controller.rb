@@ -20,7 +20,7 @@ class AppsController < ApplicationController
         @pet_apps = PetApplication.create(pet_id: id, application_id: application.id)
         session[:favorite].delete(id.to_s)
       end
-    
+
     else
       flash.now[:notice] = "Application not submitted: Required information missing."
       render :new
@@ -31,12 +31,30 @@ class AppsController < ApplicationController
     @app = Application.find(params[:id])
   end
 
+  def update
+    pets_approved = params[:pet_ids]
+    pets_approved.each do |pet_id|
+      pet = Pet.find(pet_id)
+      pet.update(status: "Pending")
+      pet_app = pet.pet_applications.find_by(application_id: params[:id])
+      pet_app.update(approved: true)
+      # PetApplication.find_by(pet_id: pet_id, application_id: params[:id])
+    end
+    #update_all
+    if pets_approved.length > 1
+      redirect_to "/pets"
+    else
+      pet_id = pets_approved.first.to_i
+      pet = Pet.find(pet_id)
+      redirect_to "/pets/#{pet.id}"
+    end
+  end
   # def change_status
   #   @app = Application.find(params[:id])
   #   binding.pry
   # end
- 
-  
+
+
 
   private
 

@@ -15,4 +15,3 @@ RSpec.describe Application, type: :model do
     it { should validate_presence_of :description }
   end
 end
-# rails g migration CreateApplications name:string address:string city:string state:string zip:integer phone:string description:string

@@ -85,7 +85,6 @@ RSpec.describe "From a shelter show page", type: feature do
 
     within ".statistics" do
       expect(page).to have_content("Number of Pets: 2")
-      binding.pry
       expect(page).to have_content("Number of Applications: 2")
       expect(page).to have_content("Average Rating: 4.5")
     end

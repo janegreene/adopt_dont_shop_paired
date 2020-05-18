@@ -8,8 +8,6 @@ class Shelter < ApplicationRecord
   end
 
   def app_count
-  
-    self.applications.count
   end
 
   def avg_rating

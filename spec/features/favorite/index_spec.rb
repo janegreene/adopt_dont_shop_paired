@@ -32,114 +32,92 @@ RSpec.describe "When I have add pets to my favorites list" do
                         shelter_id: @shelter1.id,
                         description: "Small white dog",
                         status: "Adoptable")
-        end
-
-      it "can see my favorited pets and their info" do
-
-        visit "/pets/#{@pet1.id}"
-
-        within(".column-#{@pet1.id}") do
-            click_button "Favorite Pet"
-        end
-
-        visit "/pets/#{@pet2.id}"
-
-        within(".column-#{@pet2.id}") do
-            click_button "Favorite Pet"
-        end
-
-        visit "/favorites"
-
-        expect(current_path).to eq("/favorites")
-        expect(page).to have_content(@pet1.name)
-        expect(page).to have_content(@pet2.name)
-        expect(page).to_not have_content(@pet3.name)
     end
 
+    it "can see my favorited pets and their info" do
 
-      it "can click link to remove pet from favorite" do
-        visit "/pets/#{@pet1.id}"
+      visit "/pets/#{@pet1.id}"
 
-        within(".column-#{@pet1.id}") do
-            click_button "Favorite Pet"
-        end
-
-        visit "/pets/#{@pet2.id}"
-
-        within(".column-#{@pet2.id}") do
-            click_button "Favorite Pet"
-        end
-
-        visit "/favorites"
-
-        # click_button "Remove Favorite"
-        click_button("Remove Favorite", match: :first)
-        expect(current_path).to eq("/favorites")
-        expect(page).to_not have_content(@pet1.name)
-        # within(".pet_container-#{@pet1.id}") do
-        #   click_button "Remove Favorite"
-        # end
-    end
-
-    describe "when I have no favorite pets" do
-      it "shows a message saying I have no favorites" do
-        visit "/favorites"
-        expect(page).to have_content("You have no favorited pets.")
+      within(".column-#{@pet1.id}") do
+          click_button "Favorite Pet"
       end
+
+      visit "/pets/#{@pet2.id}"
+
+      within(".column-#{@pet2.id}") do
+          click_button "Favorite Pet"
+      end
+
+      visit "/favorites"
+
+      expect(current_path).to eq("/favorites")
+      expect(page).to have_content(@pet1.name)
+      expect(page).to have_content(@pet2.name)
+      expect(page).to_not have_content(@pet3.name)
     end
 
-    it "can click link to remove all pets from favorites" do
-        visit "/pets/#{@pet1.id}"
 
-        within(".column-#{@pet1.id}") do
-            click_button "Favorite Pet"
-        end
+    it "can click link to remove pet from favorite" do
+      visit "/pets/#{@pet1.id}"
 
-        visit "/pets/#{@pet2.id}"
+      within(".column-#{@pet1.id}") do
+          click_button "Favorite Pet"
+      end
 
-        within(".column-#{@pet2.id}") do
-            click_button "Favorite Pet"
-        end
+      visit "/pets/#{@pet2.id}"
 
-        visit "/favorites"
+      within(".column-#{@pet2.id}") do
+          click_button "Favorite Pet"
+      end
 
-        expect(page).to have_link("Remove All Favorited Pets")
+      visit "/favorites"
 
-        click_link "Remove All Favorited Pets"
+      click_button("Remove Favorite", match: :first)
+      expect(current_path).to eq("/favorites")
+      expect(page).to_not have_content(@pet1.name)
+  end
 
-        expect(current_path).to eq("/favorites")
-        expect(page).to have_content("You have no favorited pets.")
-        expect(page).to_not have_link("Remove All Favorited Pets")
+  describe "when I have no favorite pets" do
+    it "shows a message saying I have no favorites" do
+      visit "/favorites"
+      expect(page).to have_content("You have no favorited pets.")
     end
+  end
+
+  it "can click link to remove all pets from favorites" do
+    visit "/pets/#{@pet1.id}"
+
+    within(".column-#{@pet1.id}") do
+      click_button "Favorite Pet"
+    end
+
+    visit "/pets/#{@pet2.id}"
+
+    within(".column-#{@pet2.id}") do
+      click_button "Favorite Pet"
+    end
+
+    visit "/favorites"
+
+    expect(page).to have_link("Remove All Favorited Pets")
+
+    click_link "Remove All Favorited Pets"
+
+    expect(current_path).to eq("/favorites")
+    expect(page).to have_content("You have no favorited pets.")
+    expect(page).to_not have_link("Remove All Favorited Pets")
+  end
+
   it "List of Pets that have applications on them" do
-
     application = Application.create(name: "Will Rogers",
       address: "132 Maple Dr.", city: "Claremore", state: "OK", zip: 74014,
       description: "great fenced yard", pet_ids: ["#{@pet1.id}", "#{@pet2.id}"])
 
-      visit "/favorites"
+    visit "/favorites"
+
       within(".apps") do
         have_link "#{@pet1.name}", href: "/pets/#{@pet1.id}"
       end
+    end
   end
 end
-end
-#
-# User Story 18, List of Pets that have applications on them
-#
-# As a visitor
-# After one or more applications have been created
-# When I visit the favorites index page
-# I see a section on the page that has a list of all of the pets that have at least one application on them
-# Each pet's name is a link to their show page
-#
-# # User Story 15, Remove all Favorite from Favorites Page
-#
-# # As a visitor
-# # When I have added pets to my favorites list
-# # And I visit my favorites page ("/favorites")
-# # I see a link to remove all favorited pets
-# # When I click that link
-# # I'm redirected back to the favorites page
-# I see the text saying that I have no favorited pets
-# And the favorites indicator returns to 0

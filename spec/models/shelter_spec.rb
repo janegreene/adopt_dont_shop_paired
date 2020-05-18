@@ -21,7 +21,7 @@ RSpec.describe Shelter do
                               state: "CO",
                               zip: 80223 )
     it '#pet_count' do
-    expect(shelter1.pet_count).to eq(0)
-  end
+      expect(shelter1.pet_count).to eq(0)
+    end
   end
 end

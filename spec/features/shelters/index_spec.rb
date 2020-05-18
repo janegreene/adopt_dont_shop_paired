@@ -14,6 +14,7 @@ RSpec.describe "create new shelter page", type: feature do
                               state: "CO",
                               zip: 80110 )
   end
+
   describe "when I go to the index page"
     it "can click link to make new shelter" do
 
@@ -82,13 +83,6 @@ RSpec.describe "create new shelter page", type: feature do
     expect(current_path).to eq("/shelters/#{@shelter1.id}/edit")
     expect(page).to have_content("Name can't be blank")
     expect(page).to have_no_content("State can't be blank")
-
   end
 end
 
-# User Story 29, Flash Messages for Shelter Create and Update
-#
-# As a visitor
-# When I am updating or creating a new shelter
-# If I try to submit the form with incomplete information
-# I see a flash message indicating which field(s) I am missing

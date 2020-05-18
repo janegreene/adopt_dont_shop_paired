@@ -11,6 +11,5 @@ RSpec.describe Review do
   describe 'relationships' do
     it {should belong_to :shelter}
     # it { should belong_to(:shelter).dependent(:destroy) }
-
   end
 end

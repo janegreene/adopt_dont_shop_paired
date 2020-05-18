@@ -12,17 +12,16 @@ RSpec.describe "view pet show page", type: feature do
                       name: "Milo",
                       age: "2",
                       sex: "Male",
-                      shelter_id: @shelter1.id
-                    )
+                      shelter_id: @shelter1.id)
 
     @pet2 = Pet.create(image: "https://cdn.akc.org/content/hero/lab_owner_hero.jpg",
                       name: "Lucy",
                       age: "6",
                       sex: "Female",
-                      shelter_id: @shelter1.id
-                    )
+                      shelter_id: @shelter1.id)
 
   end
+
   describe "when I go to a pet's show page" do
     it "can click link to delete the pet" do
 
@@ -37,6 +36,7 @@ RSpec.describe "view pet show page", type: feature do
     expect(page).to have_content(@pet2.shelter.name)
     end
   end
+  
   it "can see one pet will all of its attributes" do
 
     visit "/pets/#{@pet1.id}"

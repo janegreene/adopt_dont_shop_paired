@@ -15,7 +15,8 @@ class SheltersController < ApplicationController
     if shelter.save
         redirect_to '/shelters'
     else
-        flash.now[:notice] = "Sheleter not created. Required information missing: Address"
+        flash.now[:notice] = shelter.errors.full_messages.join(". ").to_s
+      # flash.now[:notice] = "Sheleter not created. Required information missing: Address"
         render :new
     end
   end
@@ -26,9 +27,14 @@ class SheltersController < ApplicationController
 
   def update
     @shelter = Shelter.find(params[:id])
-    @shelter.update(shelter_params)
 
+   if  @shelter.update(shelter_params)
     redirect_to "/shelters/#{@shelter.id}"
+   else
+    flash[:notice] = @shelter.errors.full_messages.join(". ").to_s
+    redirect_to "/shelters/#{@shelter.id}/edit"
+   end
+
   end
 
   def destroy

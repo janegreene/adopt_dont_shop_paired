@@ -4,7 +4,7 @@
 <%= form_tag "/shelters/#{@shelter_pet.id}/pets" do %>
 
 <%= label_tag :image, "Image URL" %><br>
-<%= text_field_tag :image%><br>
+<%= text_field_tag :image, "", :required => true %><br>
 
 <%= label_tag :name %><br>
 <%= text_field_tag :name %><br>
@@ -22,3 +22,4 @@
 
 <%= submit_tag "Create Pet" %>
 <% end %>
+

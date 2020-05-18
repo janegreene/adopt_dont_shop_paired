@@ -7,12 +7,14 @@ RSpec.describe "from shelter show page" do
                               city: "Denver",
                               state: "CO",
                               zip: 80223 )
+
     @review = Review.create(title: "Excellent service",
                            rating: 5,
                            content: "Found a great pet for my family.",
                            image: "https://images.unsplash.com/photo-1415369629372-26f2fe60c467?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60",
                            shelter_id: @shelter.id )
   end
+
   it "see a link to add a new review for this shelter" do
 
     visit "/shelters/#{@shelter.id}"
@@ -34,7 +36,7 @@ RSpec.describe "from shelter show page" do
     page.find("#review-avatar-#{review_1.id}")['src'].should have_content review_1.image
   end
 
- it "see a link to edit the shelter review next to each review" do
+  it "see a link to edit the shelter review next to each review" do
 
     visit "/shelters/#{@shelter.id}"
 
@@ -56,12 +58,14 @@ RSpec.describe "from shelter show page" do
   it "see a link to edit the shelter review next to each review" do
 
     visit "/shelters/#{@shelter.id}"
+    
     within(".review-#{@review.id}") do
       click_link "Edit Review"
     end
-      expect(current_path).to eq("/shelters/#{@shelter.id}/#{@review.id}/edit")
+    
+    expect(current_path).to eq("/shelters/#{@shelter.id}/#{@review.id}/edit")
+    
     fill_in "Content", with: nil
-
     click_button "Submit Review"
 
     expect(current_path).to eq("/shelters/#{@shelter.id}/#{@review.id}/edit")
@@ -74,6 +78,7 @@ RSpec.describe "from shelter show page" do
                               city: "Denver",
                               state: "CO",
                               zip: 80223 )
+
     review = Review.create(title: "Excellent service",
                            rating: 5,
                            content: "Found a great pet for my family.",
@@ -88,7 +93,5 @@ RSpec.describe "from shelter show page" do
     expect(page).to_not have_content("Excellent service")
     expect(page).to_not have_content(review.rating)
     expect(page).to_not have_content("The dog we got from here is AMAZING!")
-    # page.find("#review-avatar-#{review.id}")['src'].should have_content review.image
   end
-
 end

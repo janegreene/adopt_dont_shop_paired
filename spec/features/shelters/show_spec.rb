@@ -29,6 +29,26 @@ RSpec.describe "From a shelter show page", type: feature do
                       shelter_id: @shelter1.id,
                       description: "Small white dog",
                       status: "Adoptable")
+
+    @review1 = Review.create(title: "Excellent service",
+                           rating: 5,
+                           content: "Found a great pet for my family.",
+                           image: "https://images.unsplash.com/photo-1415369629372-26f2fe60c467?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60",
+                           shelter_id: @shelter1.id )
+
+    @review2 = Review.create(title: "Excellent service",
+                           rating: 4,
+                           content: "Found a great pet for my family.",
+                           image: "https://images.unsplash.com/photo-1415369629372-26f2fe60c467?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60",
+                           shelter_id: @shelter1.id )
+    
+    @application = Application.create(name: "Will Rogers",
+      address: "132 Maple Dr.", city: "Claremore", state: "OK", zip: 74014, phone: "918-233-9000",
+      description: "great fenced yard", pet_ids: ["#{@pet1.id}", "#{@pet2.id}"])
+
+    @application2 = Application.create(name: "Roger Will",
+      address: "132 Maple Dr.", city: "Claremore", state: "OK", zip: 74014, phone: "918-233-9000",
+      description: "great fenced yard", pet_ids: ["#{@pet1.id}", "#{@pet2.id}"])
   end
 
   it "can click link to delete the shelter" do
@@ -65,6 +85,9 @@ RSpec.describe "From a shelter show page", type: feature do
 
     within ".statistics" do
       expect(page).to have_content("Number of Pets: 2")
+      binding.pry
+      expect(page).to have_content("Number of Applications: 2")
+      expect(page).to have_content("Average Rating: 4.5")
     end
   end
 end

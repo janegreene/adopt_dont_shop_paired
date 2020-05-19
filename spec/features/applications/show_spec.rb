@@ -47,7 +47,7 @@ RSpec.describe "the Application new page" do
     have_link 'Otis', href: "/pets/#{@pet2.id}"
   end
 
-  it "can click a link to approve the application" do
+  xit "can click a link to approve the application" do
     visit "/applications/#{@application2.id}"
     select("#{@pet1.name}")
     # expect(page).to have_button("Approve Application")
@@ -56,7 +56,7 @@ RSpec.describe "the Application new page" do
     expect(page).to have_content("Adoption Status: Pending")
     # expect(page).to have_content("On hold for: #{@application2.name}.")
   end
-  it "can click a link to approve the application v2" do
+  xit "can click a link to approve the application v2" do
 
     visit "/applications/#{@application.id}"
     select("#{@pet1.name}")
@@ -70,7 +70,7 @@ RSpec.describe "the Application new page" do
     # expect(page).to have_content("On hold for #{@application.name}.")
   end
 
-  it "Pets can only have one approved application on them at a time" do
+  xit "Pets can only have one approved application on them at a time" do
     application2 = Application.create(name: "Bill Rogers",
       address: "132 Maple Dr.", city: "Claremore", state: "OK", zip: 74014, phone: "918-233-9000",
       description: "great fenced yard", pet_ids: ["#{@pet1.id}", "#{@pet2.id}"])
@@ -87,7 +87,7 @@ RSpec.describe "the Application new page" do
     click_button "Approve Application"
     expect(page).to have_content("No more applications can be approved for this pet at this time.")
   end
-  xit "approved applications can be revoked" do
+  it "approved applications can be revoked" do
     application2 = Application.create(name: "Bill Rogers",
       address: "132 Maple Dr.", city: "Claremore", state: "OK", zip: 74014, phone: "918-233-9000",
       description: "great fenced yard", pet_ids: ["#{@pet1.id}"])
@@ -103,6 +103,16 @@ RSpec.describe "the Application new page" do
 
     visit "/pets/#{@pet1.id}"
     expect(page).to have_content("Adoptable")
+  end
+  xit "anywhere an applicant name appears it is a link to show page" do
+
+  # visit "/shelters"
+  # click_link(shelter1.name, match: :first)
+  # expect(current_path).to eq("/shelters/#{shelter1.id}")
+  #
+  # visit "/pets"
+  # click_link(shelter1.name, match: :first)
+  # expect(current_path).to eq("/shelters/#{shelter1.id}")
   end
 end
 

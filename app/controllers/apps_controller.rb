@@ -32,6 +32,7 @@ class AppsController < ApplicationController
   end
 
   def update
+    # require "pry"; binding.pry
     pets_approved = params[:pet_ids]
     @app = Application.find(params[:id])
     pets_approved.each do |pet_id|
@@ -45,7 +46,6 @@ class AppsController < ApplicationController
       # PetApplication.find_by(pet_id: pet_id, application_id: params[:id])
       end
     end
-    #update_all
     if pets_approved.length > 1
       redirect_to "/pets"
     else
@@ -53,6 +53,19 @@ class AppsController < ApplicationController
       pet = Pet.find(pet_id)
       redirect_to "/pets/#{pet.id}"
     end
+  end
+
+  def unapprove
+    pets_approved = params[:pet_ids]
+    @app = Application.find(params[:id])
+    pet_app = PetApplication.where(application_id: @app.id).first
+    # require "pry"; binding.pry
+    pet = Pet.where(id: pet_app.pet_id)
+    pet_app.update(approved: false)
+    pet.update(status: "Adoptable")
+
+    redirect_to "/applications/#{@app.id}"
+
   end
   # def change_status
   #   @app = Application.find(params[:id])

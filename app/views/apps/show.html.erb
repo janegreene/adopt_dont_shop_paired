@@ -1,4 +1,4 @@
-
+<div>
 <p><b>Name:</b> <%= @app.name %></p>
 <p><b>Address:</b> <%= @app.address %></p>
 <p><b>City:</b> <%= @app.city %></p>
@@ -8,7 +8,14 @@
 <p><b>Description:</b> <%= @app.description %></p>
 
 <h1>Approve Application</h1>
-       <%= form_tag "/applications/#{@app.id}/update", method: :patch  do %>
+<%= form_tag "/applications/#{@app.id}/update", method: :patch  do %>
        <%= select_tag 'pet_ids[]', options_for_select(@app.pets.map { |pet| [pet.name, pet.id] }), {:multiple => true} %>
        <%= submit_tag "Approve Application" %>
 <% end %>
+
+<%= form_tag "/applications/#{@app.id}/unapprove", method: :patch  do %>
+       <%= select_tag 'pet_ids[]', options_for_select(@app.pets.map { |pet| [pet.name, pet.id] }), {:multiple => true} %>
+       <%= submit_tag "Unapprove Application" %>
+<% end %>
+
+</div>

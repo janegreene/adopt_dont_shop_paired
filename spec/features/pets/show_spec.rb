@@ -12,12 +12,14 @@ RSpec.describe "view pet show page", type: feature do
                       name: "Milo",
                       age: "2",
                       sex: "Male",
+                      description: "yolo",
                       shelter_id: @shelter1.id)
 
     @pet2 = Pet.create(image: "https://cdn.akc.org/content/hero/lab_owner_hero.jpg",
                       name: "Lucy",
                       age: "6",
                       sex: "Female",
+                      description: "yolo",
                       shelter_id: @shelter1.id)
 
   end
@@ -36,7 +38,7 @@ RSpec.describe "view pet show page", type: feature do
     expect(page).to have_content(@pet2.shelter.name)
     end
   end
-  
+
   it "can see one pet will all of its attributes" do
 
     visit "/pets/#{@pet1.id}"
@@ -55,7 +57,7 @@ RSpec.describe "view pet show page", type: feature do
     expect(current_path).to eq("/pets/#{@pet1.id}")
     expect(page).to have_content("You have favorited #{@pet1.name}.")
   end
-  
+
   it "can click link to update pet" do
 
     visit "/pets/#{@pet1.id}"

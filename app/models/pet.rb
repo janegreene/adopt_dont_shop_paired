@@ -4,6 +4,13 @@ class Pet < ApplicationRecord
   has_many :pet_applications
   has_many :applications, through: :pet_applications
 
+  def on_hold_for
+    name = self.applications.select(:name).where('pet_applications.approved')
+    if !name.empty?
+      p "On hold for: #{name.pluck(:name).first}"
+    end
+  end
+
   # def adopter_name
   #   if self.pet_applications.any? { |app| app.approved == true }
   #     self.applications.pluck(:name).where(approved: :true)

@@ -42,8 +42,6 @@ class PetsController < ApplicationController
     pet = Pet.find(params[:id])
     favorite.delete(pet.id.to_s)
     pet.destroy
-    # require "pry"; binding.pry
-    # Pet.destroy(params[:id])
     redirect_to "/pets"
   end
 

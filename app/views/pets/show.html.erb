@@ -1,10 +1,6 @@
 <div class="container">
 
-<% if @pet.status == "Pending" %>
-    <% @pet.applications.each do |app| %>
-    <p> On hold for <%= app.name %>. </p>
-  <% end %>
-<% end %>
+
 
 <div class="row">
   <div class="pet_container-<%= @pet.id %>">

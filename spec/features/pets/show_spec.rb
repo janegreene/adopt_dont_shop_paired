@@ -13,6 +13,7 @@ RSpec.describe "view pet show page", type: feature do
                       age: "2",
                       sex: "Male",
                       description: "yolo",
+                      status: "Adoptable",
                       shelter_id: @shelter1.id)
 
     @pet2 = Pet.create(image: "https://cdn.akc.org/content/hero/lab_owner_hero.jpg",
@@ -20,6 +21,7 @@ RSpec.describe "view pet show page", type: feature do
                       age: "6",
                       sex: "Female",
                       description: "yolo",
+                      status: "Adoptable",
                       shelter_id: @shelter1.id)
 
   end
@@ -80,7 +82,7 @@ RSpec.describe "view pet show page", type: feature do
     expect(page).to have_content("Adorable, fluffy, small white dog")
     expect(page).to have_content("3")
   end
-  it "incomplete form update pet give error" do
+  it "incomplete form update for pet gives error" do
 
     visit "/pets/#{@pet1.id}"
 
@@ -95,6 +97,21 @@ RSpec.describe "view pet show page", type: feature do
     fill_in "Sex", with: ""
 
     click_button "Submit Update"
+    expect(current_path).to eq("/pets/#{@pet1.id}/edit")
     expect(page).to have_content("Sex can't be blank")
   end
+  it "deleting a favorited pet also removes it from favorites" do
+    visit "/pets/#{@pet1.id}"
+    click_button "Favorite Pet"
+
+    click_link 'Delete Pet'
+    expect(current_path).to eq("/pets")
+    expect(page).to have_content("Favorite Pets: 0")
+  end
 end
+# User Story 32, Deleting a pet removes it from favorites
+#
+# As a visitor
+# If I've added a pet to my favorites
+# When I try to delete that pet from the database
+# They are also removed from the favorites list

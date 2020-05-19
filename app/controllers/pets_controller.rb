@@ -34,12 +34,16 @@ class PetsController < ApplicationController
       redirect_to "/pets/#{@pet.id}"
     else
       flash[:notice] = @pet.errors.full_messages.join(". ").to_s
-      redirect_to "/pets/#{@pet.id}" #this is not addressed in the story so it may need revisiting
+      redirect_to "/pets/#{@pet.id}/edit"
     end
   end
 
   def destroy
-    Pet.destroy(params[:id])
+    pet = Pet.find(params[:id])
+    favorite.delete(pet.id.to_s)
+    pet.destroy
+    # require "pry"; binding.pry
+    # Pet.destroy(params[:id])
     redirect_to "/pets"
   end
 

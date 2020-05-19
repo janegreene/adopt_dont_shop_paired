@@ -40,9 +40,13 @@ class PetsController < ApplicationController
 
   def destroy
     pet = Pet.find(params[:id])
-    favorite.delete(pet.id.to_s)
-    pet.destroy
-    redirect_to "/pets"
+    if pet.status == "Adoptable"
+      favorite.delete(pet.id.to_s)
+      pet.destroy
+    else
+      flash[:notice] = "Adoption pending, cannot delete pet."
+    end
+    redirect_to "/pets" 
   end
 
   def change_status

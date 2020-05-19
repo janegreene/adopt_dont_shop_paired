@@ -34,6 +34,7 @@ RSpec.describe "view pet show page", type: feature do
     click_link 'Delete Pet'
 
     expect(current_path).to eq('/pets')
+    expect(page).to have_no_content(@pet1.name)
     expect(page).to have_content(@pet2.name)
     expect(page).to have_content(@pet2.age)
     expect(page).to have_content(@pet2.sex)
@@ -41,7 +42,7 @@ RSpec.describe "view pet show page", type: feature do
     end
   end
 
-  it "can see one pet will all of its attributes" do
+  it "can see one pet with all of its attributes" do
 
     visit "/pets/#{@pet1.id}"
 
@@ -107,6 +108,19 @@ RSpec.describe "view pet show page", type: feature do
     click_link 'Delete Pet'
     expect(current_path).to eq("/pets")
     expect(page).to have_content("Favorite Pets: 0")
+  end
+  it "can not delete pets with approved apps" do
+    pet2 = Pet.create(image: "https://cdn.akc.org/content/hero/lab_owner_hero.jpg",
+                      name: "Ralph",
+                      age: "6",
+                      sex: "Female",
+                      description: "yolo",
+                      status: "Pending",
+                      shelter_id: @shelter1.id)
+
+  visit "/pets/#{pet2.id}"
+  click_link 'Delete Pet'
+  expect(page).to have_content("Adoption pending, cannot delete pet.")
   end
 end
 # User Story 32, Deleting a pet removes it from favorites

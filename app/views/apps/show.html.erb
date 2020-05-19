@@ -7,15 +7,17 @@
 <p><b>Phone:</b> <%= @app.phone %></p>
 <p><b>Description:</b> <%= @app.description %></p>
 
-<h1>Approve Application</h1>
-<%= form_tag "/applications/#{@app.id}/update", method: :patch  do %>
-       <%= select_tag 'pet_ids[]', options_for_select(@app.pets.map { |pet| [pet.name, pet.id] }), {:multiple => true} %>
-       <%= submit_tag "Approve Application" %>
-<% end %>
 
-<%= form_tag "/applications/#{@app.id}/unapprove", method: :patch  do %>
-       <%= select_tag 'pet_ids[]', options_for_select(@app.pets.map { |pet| [pet.name, pet.id] }), {:multiple => true} %>
-       <%= submit_tag "Unapprove Application" %>
-<% end %>
+<h1>Approve Application</h1>
+
+<% @app.pets.each do |pet| %>
+      <% if pet.on_hold_for == nil %>
+        <%= button_to "Approve Application for #{pet.name}", applications_new_path(@app.id), method: :patch %>
+      <% else %>
+       <% if pet.on_hold_for == @app.name %>
+        <%= button_to "Unapprove Application for #{pet.name}", "/applications/#{@app.id}/unapprove", method: :patch %>
+       <% end %>
+       <% end %>
+       <% end %>
 
 </div>

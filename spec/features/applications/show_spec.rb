@@ -56,14 +56,14 @@ RSpec.describe "the Application new page" do
     expect(page).to have_content("Adoption Status: Pending")
     # expect(page).to have_content("On hold for: #{@application2.name}.")
   end
-  xit "can click a link to approve the application v2" do
+  it "can click a link to approve the application v2" do
 
     visit "/applications/#{@application.id}"
-    select("#{@pet1.name}")
-    select("#{@pet2.name}")
+    # select("#{@pet1.name}")
+    # select("#{@pet2.name}")
 
     expect(page).to have_button("Approve Application")
-    click_button "Approve Application"
+    click_button("Approve Application", match: :first)
     expect(current_path).to eq("/pets")
     click_link "#{@pet1.name}"
     expect(page).to have_content("Adoption Status: Pending")

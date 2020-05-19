@@ -33,12 +33,17 @@ class AppsController < ApplicationController
 
   def update
     pets_approved = params[:pet_ids]
+    @app = Application.find(params[:id])
     pets_approved.each do |pet_id|
       pet = Pet.find(pet_id)
+      if pet.pet_applications.any? { |app| app.approved == true }
+        flash[:notice] = "No more applications can be approved for this pet at this time."
+      else
       pet.update(status: "Pending")
       pet_app = pet.pet_applications.find_by(application_id: params[:id])
       pet_app.update(approved: true)
       # PetApplication.find_by(pet_id: pet_id, application_id: params[:id])
+      end
     end
     #update_all
     if pets_approved.length > 1

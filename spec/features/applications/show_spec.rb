@@ -59,7 +59,6 @@ RSpec.describe "the Application new page" do
   it "can click a link to approve the application v2" do
 
     visit "/applications/#{@application.id}"
-
     select("#{@pet1.name}")
     select("#{@pet2.name}")
 
@@ -70,4 +69,35 @@ RSpec.describe "the Application new page" do
     expect(page).to have_content("Adoption Status: Pending")
     expect(page).to have_content("On hold for #{@application.name}.")
   end
+
+  it "Pets can only have one approved application on them at a time" do
+    application2 = Application.create(name: "Bill Rogers",
+      address: "132 Maple Dr.", city: "Claremore", state: "OK", zip: 74014, phone: "918-233-9000",
+      description: "great fenced yard", pet_ids: ["#{@pet1.id}", "#{@pet2.id}"])
+
+    visit "/applications/#{@application.id}"
+
+    select("#{@pet1.name}")
+    select("#{@pet2.name}")
+
+    click_button "Approve Application"
+
+    visit "/applications/#{application2.id}"
+    select("#{@pet1.name}")
+    click_button "Approve Application"
+    expect(page).to have_content("No more applications can be approved for this pet at this time.")
+  end
 end
+
+# User Story 24, Pets can only have one approved application on them at any time
+#
+# [ ] done
+#
+# As a visitor
+# When a pet has more than one application made for them
+# And one application has already been approved for them
+# I can not approve any other applications for that pet but all other applications
+# still remain on file (they can be seen on the pets application index page)
+# (This can be done by either taking away the option to approve the application,
+#   or having a flash message pop up saying that no more applications can be
+#   approved for this pet at this time)

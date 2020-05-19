@@ -102,14 +102,42 @@ RSpec.describe "From a shelter show page", type: feature do
                       shelter_id: shelter2.id,
                       description: "Small white dog",
                       status: "Pending")
-    application = Application.create(name: "Will Rogers",
-                      address: "132 Maple Dr.", city: "Claremore", state: "OK", zip: 74014, phone: "918-233-9000",
-                      description: "great fenced yard", pet_ids: ["#{pet4.id}"])
-# require "pry"; binding.pry
+
     visit "/shelters/#{shelter2.id}"
 
     click_link 'Delete Shelter'
     expect(page).to have_content("Pet pending adoption, shelter can not be deleted.")
+  end
+  it "delete a shelter with only adoptable pets also deletes pets" do
+    shelter2 = Shelter.create(name: "Pet Palace" ,
+                              address: "456 South Street",
+                              city: "Englewood",
+                              state: "CO",
+                              zip: 80110 )
+    pet1 = Pet.create(image: "https://ichef.bbci.co.uk/wwfeatures/live/976_549/images/live/p0/7z/n7/p07zn7p7.jpg",
+                      name: "Scar",
+                      age: "2",
+                      sex: "Male",
+                      shelter_id: shelter2.id,
+                      description: "Small white dog",
+                      status: "Adoptable")
+
+    pet2 = Pet.create(image: "https://ichef.bbci.co.uk/wwfeatures/live/976_549/images/live/p0/7z/n7/p07zn7p7.jpg",
+                      name: "Winnie",
+                      age: "3",
+                      sex: "Male",
+                      shelter_id: shelter2.id,
+                      description: "Small white dog",
+                      status: "Adoptable")
+
+    visit "/shelters/#{shelter2.id}"
+
+    click_link 'Delete Shelter'
+    visit "/shelters"
+    expect(page).to have_no_content(shelter2.name)
+    visit "/pets"
+    expect(page).to have_no_content(pet1.name)
+    expect(page).to have_no_content(pet2.name)
   end
 
 end

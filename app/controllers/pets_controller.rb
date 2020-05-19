@@ -30,9 +30,12 @@ class PetsController < ApplicationController
 
   def update
     @pet = Pet.find(params[:id])
-    @pet.update(pet_params)
-
-    redirect_to "/pets/#{@pet.id}"
+    if @pet.update(pet_params)
+      redirect_to "/pets/#{@pet.id}"
+    else
+      flash[:notice] = @pet.errors.full_messages.join(". ").to_s
+      redirect_to "/pets/#{@pet.id}" #this is not addressed in the story so it may need revisiting
+    end
   end
 
   def destroy

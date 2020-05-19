@@ -80,4 +80,21 @@ RSpec.describe "view pet show page", type: feature do
     expect(page).to have_content("Adorable, fluffy, small white dog")
     expect(page).to have_content("3")
   end
+  it "incomplete form update pet give error" do
+
+    visit "/pets/#{@pet1.id}"
+
+    click_link "Update Pet"
+
+    expect(current_path).to eq("/pets/#{@pet1.id}/edit")
+
+    fill_in "Image", with: "https://ichef.bbci.co.uk/wwfeatures/live/976_549/images/live/p0/7z/n7/p07zn7p7.jpg"
+    fill_in "Name", with: "Milo"
+    fill_in "Description", with: "Adorable, fluffy, small white dog"
+    fill_in "Approximate Age", with: "3"
+    fill_in "Sex", with: ""
+
+    click_button "Submit Update"
+    expect(page).to have_content("Sex can't be blank")
+  end
 end

@@ -122,6 +122,24 @@ RSpec.describe "view pet show page", type: feature do
   click_link 'Delete Pet'
   expect(page).to have_content("Adoption pending, cannot delete pet.")
   end
+  it "anywhere a pet name appears it is a link to show page" do
+
+  visit "/pets"
+  click_link(@pet1.name, match: :first)
+  expect(current_path).to eq("/pets/#{@pet1.id}")
+
+  visit "/shelters/#{@shelter1.id}/pets"
+  click_link(@pet1.name, match: :first)
+  expect(current_path).to eq("/pets/#{@pet1.id}")
+
+  visit "/pets/#{@pet1.id}"
+  click_button "Favorite Pet"
+
+  click_link 'Favorite Pets: 1'
+  expect(current_path).to eq("/favorites")
+  click_link(@pet1.name, match: :first)
+  expect(current_path).to eq("/pets/#{@pet1.id}")
+  end
 end
 # User Story 32, Deleting a pet removes it from favorites
 #

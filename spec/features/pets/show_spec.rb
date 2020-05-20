@@ -9,7 +9,7 @@ RSpec.describe "view pet show page", type: feature do
                               zip: 80223 )
 
     @pet1 = Pet.create(image: "https://ichef.bbci.co.uk/wwfeatures/live/976_549/images/live/p0/7z/n7/p07zn7p7.jpg",
-                      name: "Milo",
+                      name: "Pet 1",
                       age: "2",
                       sex: "Male",
                       description: "yolo",
@@ -47,7 +47,7 @@ RSpec.describe "view pet show page", type: feature do
     visit "/pets/#{@pet1.id}"
 
     click_link(@pet1.name, match: :first)
-    expect(page).to have_content("Milo")
+    expect(page).to have_content(@pet1.name)
     expect(page).to have_content(@pet1.age)
     expect(page).to have_content(@pet1.sex)
   end
@@ -125,11 +125,12 @@ RSpec.describe "view pet show page", type: feature do
   it "anywhere a pet name appears it is a link to show page" do
 
   visit "/pets"
-  click_link(@pet1.name, match: :first)
+  save_and_open_page
+  click_link(@pet1.name)
   expect(current_path).to eq("/pets/#{@pet1.id}")
 
   visit "/shelters/#{@shelter1.id}/pets"
-  click_link(@pet1.name, match: :first)
+  click_link(@pet1.name)
   expect(current_path).to eq("/pets/#{@pet1.id}")
 
   visit "/pets/#{@pet1.id}"
@@ -137,7 +138,7 @@ RSpec.describe "view pet show page", type: feature do
 
   click_link 'Favorite Pets: 1'
   expect(current_path).to eq("/favorites")
-  click_link(@pet1.name, match: :first)
+  click_link(@pet1.name)
   expect(current_path).to eq("/pets/#{@pet1.id}")
   end
 end

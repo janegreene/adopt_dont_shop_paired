@@ -34,6 +34,11 @@ RSpec.describe "When I have add pets to my favorites list" do
                         status: "Adoptable")
     end
 
+    after(:each) do
+      Pet.destroy_all
+      Shelter.destroy_all
+    end
+
     it "can see my favorited pets and their info" do
 
       visit "/pets/#{@pet1.id}"

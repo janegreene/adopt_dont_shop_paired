@@ -63,9 +63,8 @@ RSpec.describe "the Application new page" do
     # select("#{@pet2.name}")
 
     expect(page).to have_button("Approve Application")
-    click_button("Approve Application", match: :first)
-    expect(current_path).to eq("/pets")
-    click_link "#{@pet1.name}"
+    click_button "Approve Application for #{@pet1.name}"
+    expect(current_path).to eq("/pets/#{@pet1.id}")
     expect(page).to have_content("Adoption Status: Pending")
     # expect(page).to have_content("On hold for #{@application.name}.")
   end
@@ -93,26 +92,23 @@ RSpec.describe "the Application new page" do
       description: "great fenced yard", pet_ids: ["#{@pet1.id}"])
 
     visit "/applications/#{application2.id}"
-
-    click_button "Unapprove Application"
+    
+    click_button "Approve Application for #{@pet1.name}"
+    visit "/applications/#{application2.id}"
+    click_button "Unapprove Application for #{@pet1.name}"
 
     expect(current_path).to eq"/applications/#{application2.id}"
-
-    expect(page).to have_content("#{@pet1.name}")
-    expect(page).to have_content "Approve Application"
 
     visit "/pets/#{@pet1.id}"
     expect(page).to have_content("Adoptable")
   end
-  xit "anywhere an applicant name appears it is a link to show page" do
+  it "anywhere an applicant name appears it is a link to show page" do
 
-  # visit "/shelters"
-  # click_link(shelter1.name, match: :first)
-  # expect(current_path).to eq("/shelters/#{shelter1.id}")
-  #
-  # visit "/pets"
-  # click_link(shelter1.name, match: :first)
-  # expect(current_path).to eq("/shelters/#{shelter1.id}")
+  visit "pets/#{@pet1.id}/applications"
+  click_link(@application.name, match: :first)
+  expect(current_path).to eq("/applications/#{@application.id}")
+
+  #on hold for name will also need a link
   end
 end
 

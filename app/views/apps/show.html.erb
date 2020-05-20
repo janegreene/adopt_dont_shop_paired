@@ -12,7 +12,7 @@
 
 <% @app.pets.each do |pet| %>
       <% if pet.on_hold_for == nil %>
-        <%= button_to "Approve Application for #{pet.name}", applications_new_path(@app.id), method: :patch %>
+        <%= button_to "Approve Application for #{pet.name}", "/applications/#{@app.id}/update", method: :patch, params: {pet_id: pet.id} %>
       <% else %>
        <% if pet.on_hold_for == @app.name %>
         <%= button_to "Unapprove Application for #{pet.name}", "/applications/#{@app.id}/unapprove", method: :patch %>

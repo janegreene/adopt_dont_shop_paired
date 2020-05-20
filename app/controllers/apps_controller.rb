@@ -56,10 +56,10 @@ class AppsController < ApplicationController
   # end
   def update
     @app = Application.find(params[:id])
+    pet = Pet.find(params[:pet_id])
     # pet_app = PetApplication.where(application_id: @app.id).first
-    require "pry"; binding.pry
-    pet_app = PetApplication.find_by(pet_id: pet_id, application_id: params[:id])
-    pet = Pet.where(id: pet_app.pet_id)
+    pet_app = PetApplication.find_by(pet_id: params[:pet_id], application_id: params[:id])
+    # pet = Pet.where(id: pet_app.pet_id)
     # require "pry"; binding.pry
     if pet.pet_applications.any? { |app| app.approved == true }
       flash[:notice] = "No more applications can be approved for this pet at this time."

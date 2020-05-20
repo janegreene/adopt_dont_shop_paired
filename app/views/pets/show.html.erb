@@ -1,6 +1,6 @@
 <div class="container"><br/>
 <% if !@pet.on_hold_for.nil?%>
-<b>On hold for: <%= @pet.on_hold_for %></b>
+<b>On hold for: <%= link_to "#{@pet.on_hold_for}", "/applications/#{@pet.pet_applicant}"  %></b>
 <% end %>
 
 <div class="row">

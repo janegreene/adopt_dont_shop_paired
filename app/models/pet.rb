@@ -10,11 +10,5 @@ class Pet < ApplicationRecord
      name.pluck(:name).first
    end
   end
-  # def adopter_name
-  #   if self.pet_applications.any? { |app| app.approved == true }
-  #     self.applications.pluck(:name).where(approved: :true)
-  #
-  #   require "pry"; binding.pry
-  # end
 
 end

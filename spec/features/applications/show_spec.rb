@@ -47,44 +47,35 @@ RSpec.describe "the Application new page" do
     have_link 'Otis', href: "/pets/#{@pet2.id}"
   end
 
-  xit "can click a link to approve the application" do
+  it "can click a link to approve the application" do
     visit "/applications/#{@application2.id}"
-    select("#{@pet1.name}")
-    # expect(page).to have_button("Approve Application")
-    click_button "Approve Application"
+    click_button "Approve Application for Milo"
     expect(current_path).to eq("/pets/#{@pet1.id}")
     expect(page).to have_content("Adoption Status: Pending")
-    # expect(page).to have_content("On hold for: #{@application2.name}.")
+    expect(page).to have_content("On hold for: #{@application2.name}")
   end
   it "can click a link to approve the application v2" do
 
     visit "/applications/#{@application.id}"
-    # select("#{@pet1.name}")
-    # select("#{@pet2.name}")
 
     expect(page).to have_button("Approve Application")
     click_button "Approve Application for #{@pet1.name}"
     expect(current_path).to eq("/pets/#{@pet1.id}")
     expect(page).to have_content("Adoption Status: Pending")
-    # expect(page).to have_content("On hold for #{@application.name}.")
+    expect(page).to have_content("On hold for: #{@application.name}")
   end
 
-  xit "Pets can only have one approved application on them at a time" do
+  it "Pets can only have one approved application on them at a time" do
     application2 = Application.create(name: "Bill Rogers",
       address: "132 Maple Dr.", city: "Claremore", state: "OK", zip: 74014, phone: "918-233-9000",
       description: "great fenced yard", pet_ids: ["#{@pet1.id}", "#{@pet2.id}"])
 
     visit "/applications/#{@application.id}"
 
-    select("#{@pet1.name}")
-    select("#{@pet2.name}")
-
-    click_button "Approve Application"
+    click_button "Approve Application for Milo"
 
     visit "/applications/#{application2.id}"
-    select("#{@pet1.name}")
-    click_button "Approve Application"
-    expect(page).to have_content("No more applications can be approved for this pet at this time.")
+    expect(page).not_to have_content("Approve Application for Milo")
   end
   it "approved applications can be revoked" do
     application2 = Application.create(name: "Bill Rogers",
@@ -92,7 +83,7 @@ RSpec.describe "the Application new page" do
       description: "great fenced yard", pet_ids: ["#{@pet1.id}"])
 
     visit "/applications/#{application2.id}"
-    
+
     click_button "Approve Application for #{@pet1.name}"
     visit "/applications/#{application2.id}"
     click_button "Unapprove Application for #{@pet1.name}"
@@ -108,35 +99,5 @@ RSpec.describe "the Application new page" do
   click_link(@application.name, match: :first)
   expect(current_path).to eq("/applications/#{@application.id}")
 
-  #on hold for name will also need a link
   end
 end
-
-# User Story 25, Approved Applications can be revoked
-#
-# [ ] done
-#
-# As a visitor
-# After an application has been approved for a pet
-# When I visit that applications show page
-# I no longer see a link to approve the application for that pet
-# But I see a link to unapprove the application for that pet
-# When I click on the link to unapprove the application
-# I'm taken back to that applications show page
-# And I can see the button to approve the application for that pet again
-# When I go to that pets show page
-# I can see that the pets adoption status is now back to adoptable
-# And that pet is not on hold anymore
-
-# User Story 24, Pets can only have one approved application on them at any time
-#
-# [ ] done
-#
-# As a visitor
-# When a pet has more than one application made for them
-# And one application has already been approved for them
-# I can not approve any other applications for that pet but all other applications
-# still remain on file (they can be seen on the pets application index page)
-# (This can be done by either taking away the option to approve the application,
-#   or having a flash message pop up saying that no more applications can be
-#   approved for this pet at this time)

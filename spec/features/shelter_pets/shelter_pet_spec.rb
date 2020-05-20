@@ -12,12 +12,14 @@ RSpec.describe "when I go to the shelter pets index page" , type: feature do
                       name: "Milo",
                       age: "2",
                       sex: "Male",
+                      description: "yolo",
                       shelter_id: @shelter1.id)
 
     @pet2 = Pet.create(image: "https://cdn.akc.org/content/hero/lab_owner_hero.jpg",
                       name: "Lucy",
                       age: "6",
                       sex: "Female",
+                      description: "yolo",
                       shelter_id: @shelter1.id)
   end
 
@@ -44,7 +46,7 @@ RSpec.describe "when I go to the shelter pets index page" , type: feature do
      expect(page).to have_content(pet.age)
      expect(page).to have_content(pet.sex)
     end
-    
+  end
     it "can see all pets from that shelter with their information" do
       visit "/shelters/#{@shelter1.id}/pets"
 
@@ -56,5 +58,22 @@ RSpec.describe "when I go to the shelter pets index page" , type: feature do
         expect(page).to have_content(@pet2.age)
         expect(page).to have_content(@pet2.sex)
       end
-    end
+    it "incomplete form receives flash message" do
+
+     visit "/shelters/#{@shelter1.id}/pets"
+
+     click_link "Create Pet"
+
+     expect(current_path).to eq("/shelters/#{@shelter1.id}/pets/new")
+
+     fill_in "Image", with: "https://canineweekly.com/wp-content/uploads/2017/10/big-fluffy-dog-breeds-1024x683.jpg"
+     fill_in "Name", with: ""
+     fill_in "Description", with: "Big beautiful orphan"
+     fill_in "Approximate Age", with: "5"
+     fill_in "Sex", with: "Female"
+
+     click_button "Create Pet"
+     expect(current_path).to eq("/shelters/#{@shelter1.id}/pets/new")
+     expect(page).to have_content("Name can't be blank")
+   end
 end

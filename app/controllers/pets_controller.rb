@@ -13,9 +13,15 @@ class PetsController < ApplicationController
 
   def create
     shelter = Shelter.find(params[:shelter_id])
-    pet = shelter.pets.create(pet_params)
-    pet.status = "Adoptable"
-    redirect_to "/shelters/#{pet.shelter_id}/pets"
+    pet = shelter.pets.new(pet_params)
+
+    if pet.save
+        pet.status = "Adoptable"
+        redirect_to "/shelters/#{pet.shelter_id}/pets"
+    else
+      flash[:notice] = pet.errors.full_messages.join(". ").to_s
+        redirect_to "/shelters/#{pet.shelter_id}/pets/new"
+    end
   end
 
   def edit
@@ -24,14 +30,23 @@ class PetsController < ApplicationController
 
   def update
     @pet = Pet.find(params[:id])
-    @pet.update(pet_params)
-
-    redirect_to "/pets/#{@pet.id}"
+    if @pet.update(pet_params)
+      redirect_to "/pets/#{@pet.id}"
+    else
+      flash[:notice] = @pet.errors.full_messages.join(". ").to_s
+      redirect_to "/pets/#{@pet.id}/edit"
+    end
   end
 
   def destroy
-    Pet.destroy(params[:id])
-    redirect_to "/pets"
+    pet = Pet.find(params[:id])
+    if pet.status == "Adoptable"
+      favorite.delete(pet.id.to_s)
+      pet.destroy
+    else
+      flash[:notice] = "Adoption pending, cannot delete pet."
+    end
+    redirect_to "/pets" 
   end
 
   def change_status
@@ -39,7 +54,7 @@ class PetsController < ApplicationController
 
     if @pet.status == "Pending"
       @pet.update(status: "Adoptable")
-    else 
+    else
       @pet.update(status: "Pending")
     end
     # change_app_status

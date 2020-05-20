@@ -1,4 +1,4 @@
-
+<div>
 <p><b>Name:</b> <%= @app.name %></p>
 <p><b>Address:</b> <%= @app.address %></p>
 <p><b>City:</b> <%= @app.city %></p>
@@ -7,10 +7,17 @@
 <p><b>Phone:</b> <%= @app.phone %></p>
 <p><b>Description:</b> <%= @app.description %></p>
 
-<p><b>Pet(s):</b></p>
-<% @app.pets.each do |pet|%>
-    <div class="pets-<%=pet.id %>">
-<%= link_to "#{pet.name}", "/pets/#{pet.id}" %> <br/>
-<%= link_to "Approve Application", "/pets/#{pet.id}/change_status", method: :patch %>
+
+<h1>Approve Application</h1>
+
+<% @app.pets.each do |pet| %>
+      <% if pet.on_hold_for == nil %>
+        <%= button_to "Approve Application for #{pet.name}", "/applications/#{@app.id}/update", method: :patch, params: {pet_id: pet.id} %>
+      <% else %>
+       <% if pet.on_hold_for == @app.name %>
+        <%= button_to "Unapprove Application for #{pet.name}", "/applications/#{@app.id}/unapprove", method: :patch %>
+       <% end %>
+       <% end %>
+       <% end %>
+
 </div>
-<%end%>

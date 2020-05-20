@@ -41,7 +41,7 @@ RSpec.describe "From a shelter show page", type: feature do
                            content: "Found a great pet for my family.",
                            image: "https://images.unsplash.com/photo-1415369629372-26f2fe60c467?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60",
                            shelter_id: @shelter1.id )
-    
+
     @application = Application.create(name: "Will Rogers",
       address: "132 Maple Dr.", city: "Claremore", state: "OK", zip: 74014, phone: "918-233-9000",
       description: "great fenced yard", pet_ids: ["#{@pet1.id}", "#{@pet2.id}"])
@@ -62,7 +62,7 @@ RSpec.describe "From a shelter show page", type: feature do
 
   it "can click link to update the shelter" do
     visit "/shelters/#{@shelter1.id}"
-    
+
     click_link 'Update Shelter'
 
     fill_in "Name", with: "Find-a-Friend"
@@ -89,7 +89,67 @@ RSpec.describe "From a shelter show page", type: feature do
       expect(page).to have_content("Average Rating: 4.5")
     end
   end
+  it "cannot delete a shelter with pending pet statuses" do
+    shelter2 = Shelter.create(name: "Pet Roulette" ,
+                              address: "456 South Street",
+                              city: "Englewood",
+                              state: "CO",
+                              zip: 80110 )
+    pet4 = Pet.create(image: "https://ichef.bbci.co.uk/wwfeatures/live/976_549/images/live/p0/7z/n7/p07zn7p7.jpg",
+                      name: "Opal",
+                      age: "3",
+                      sex: "Male",
+                      shelter_id: shelter2.id,
+                      description: "Small white dog",
+                      status: "Pending")
+
+    visit "/shelters/#{shelter2.id}"
+
+    click_link 'Delete Shelter'
+    expect(page).to have_content("Pet pending adoption, shelter can not be deleted.")
+  end
+  it "delete a shelter with only adoptable pets also deletes pets" do
+    shelter2 = Shelter.create(name: "Pet Palace" ,
+                              address: "456 South Street",
+                              city: "Englewood",
+                              state: "CO",
+                              zip: 80110 )
+    pet1 = Pet.create(image: "https://ichef.bbci.co.uk/wwfeatures/live/976_549/images/live/p0/7z/n7/p07zn7p7.jpg",
+                      name: "Scar",
+                      age: "2",
+                      sex: "Male",
+                      shelter_id: shelter2.id,
+                      description: "Small white dog",
+                      status: "Adoptable")
+
+    pet2 = Pet.create(image: "https://ichef.bbci.co.uk/wwfeatures/live/976_549/images/live/p0/7z/n7/p07zn7p7.jpg",
+                      name: "Winnie",
+                      age: "3",
+                      sex: "Male",
+                      shelter_id: shelter2.id,
+                      description: "Small white dog",
+                      status: "Adoptable")
+
+    visit "/shelters/#{shelter2.id}"
+
+    click_link 'Delete Shelter'
+    visit "/shelters"
+    expect(page).to have_no_content(shelter2.name)
+    visit "/pets"
+    expect(page).to have_no_content(pet1.name)
+    expect(page).to have_no_content(pet2.name)
+  end
+
 end
+# User Story 26, Shelters with Pets that have pending status cannot be Deleted
+#
+# As a visitor
+# If a shelter has approved applications for any of their pets
+# I can not delete that shelter
+# Either:
+# - there is no button visible for me to delete the shelter
+# - if I click on the delete link for deleting a shelter, I see a flash message
+#   indicating that the shelter can not be deleted.
 
 
 # User Story 30, Shelter Statistics

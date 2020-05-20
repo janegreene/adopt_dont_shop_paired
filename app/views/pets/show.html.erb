@@ -1,10 +1,6 @@
 <div class="container">
+<b>On hold for: <%= @pet.on_hold_for%> </b><br/>
 
-<% if @pet.status == "Pending" %>
-    <% @pet.applications.each do |app| %>
-    <p> On hold for <%= app.name %>. </p>
-  <% end %>
-<% end %>
 
 <div class="row">
   <div class="pet_container-<%= @pet.id %>">
@@ -29,4 +25,3 @@
 <%= link_to 'Back to All Pets', "/pets" %>
 
   <% end %></div></div>
-

@@ -22,15 +22,15 @@ RSpec.describe "the Application new page" do
                         shelter_id: @shelter1.id,
                         description: "Small white dog",
                         status: "Adoptable")
-    
+
     @application = Application.create(name: "Will Rogers",
       address: "132 Maple Dr.", city: "Claremore", state: "OK", zip: 74014, phone: "918-233-9000",
       description: "great fenced yard", pet_ids: ["#{@pet1.id}", "#{@pet2.id}"])
 
     @application2 = Application.create(name: "Roger Will",
       address: "132 Maple Dr.", city: "Claremore", state: "OK", zip: 74014, phone: "918-233-9000",
-      description: "great fenced yard", pet_ids: ["#{@pet1.id}", "#{@pet2.id}"])
-  
+      description: "great fenced yard", pet_ids: ["#{@pet1.id}"])
+
   end
 
   it "can see all attributes of application" do
@@ -47,17 +47,57 @@ RSpec.describe "the Application new page" do
     have_link 'Otis', href: "/pets/#{@pet2.id}"
   end
 
-  it "can click a link to approve the application" do  
-    visit "/applications/#{@application.id}"
-   
-    within(".pets-#{@pet1.id}") do
-      expect(page).to have_link("Approve Application")
-      click_link "Approve Application"
-    end
-    
+  it "can click a link to approve the application" do
+    visit "/applications/#{@application2.id}"
+    click_button "Approve Application for Milo"
     expect(current_path).to eq("/pets/#{@pet1.id}")
     expect(page).to have_content("Adoption Status: Pending")
-    expect(page).to have_content("On hold for #{@application.name}.")
+    expect(page).to have_content("On hold for: #{@application2.name}")
+  end
+  it "can click a link to approve the application v2" do
+
+    visit "/applications/#{@application.id}"
+
+    expect(page).to have_button("Approve Application")
+    click_button "Approve Application for #{@pet1.name}"
+    expect(current_path).to eq("/pets/#{@pet1.id}")
+    expect(page).to have_content("Adoption Status: Pending")
+    expect(page).to have_content("On hold for: #{@application.name}")
+  end
+
+  it "Pets can only have one approved application on them at a time" do
+    application2 = Application.create(name: "Bill Rogers",
+      address: "132 Maple Dr.", city: "Claremore", state: "OK", zip: 74014, phone: "918-233-9000",
+      description: "great fenced yard", pet_ids: ["#{@pet1.id}", "#{@pet2.id}"])
+
+    visit "/applications/#{@application.id}"
+
+    click_button "Approve Application for Milo"
+
+    visit "/applications/#{application2.id}"
+    expect(page).not_to have_content("Approve Application for Milo")
+  end
+  it "approved applications can be revoked" do
+    application2 = Application.create(name: "Bill Rogers",
+      address: "132 Maple Dr.", city: "Claremore", state: "OK", zip: 74014, phone: "918-233-9000",
+      description: "great fenced yard", pet_ids: ["#{@pet1.id}"])
+
+    visit "/applications/#{application2.id}"
+
+    click_button "Approve Application for #{@pet1.name}"
+    visit "/applications/#{application2.id}"
+    click_button "Unapprove Application for #{@pet1.name}"
+
+    expect(current_path).to eq"/applications/#{application2.id}"
+
+    visit "/pets/#{@pet1.id}"
+    expect(page).to have_content("Adoptable")
+  end
+  it "anywhere an applicant name appears it is a link to show page" do
+
+  visit "pets/#{@pet1.id}/applications"
+  click_link(@application.name, match: :first)
+  expect(current_path).to eq("/applications/#{@application.id}")
+
   end
 end
-

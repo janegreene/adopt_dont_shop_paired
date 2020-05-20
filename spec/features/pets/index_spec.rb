@@ -19,18 +19,21 @@ RSpec.describe "view pet index page", type: feature do
                         name: "Milo",
                         age: "2",
                         sex: "Male",
+                        description: "yolo",
                         shelter_id: shelter1.id)
 
       pet2 = Pet.create(image: "https://cdn.akc.org/content/hero/lab_owner_hero.jpg",
                         name: "Lucy",
                         age: "6",
                         sex: "Female",
+                        description: "yolo",
                         shelter_id: shelter2.id)
 
       pet3 = Pet.create(image: "https://d17fnq9dkz9hgj.cloudfront.net/uploads/2018/02/Bernese-Mountain-Dog_01.jpg",
                         name: "Toaster",
                         age: "3",
                         sex: "Male",
+                        description: "yolo",
                         shelter_id: shelter2.id)
 
     visit '/pets'

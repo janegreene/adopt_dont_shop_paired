@@ -84,5 +84,25 @@ RSpec.describe "create new shelter page", type: feature do
     expect(page).to have_content("Name can't be blank")
     expect(page).to have_no_content("State can't be blank")
   end
-end
+  it "anywhere a shelter name appears it is a link to show page" do
+    shelter1 = Shelter.create(name: "Fur-real-Friend",
+                                address: "123 North Street",
+                                city: "Denver",
+                                state: "CO",
+                                zip: 80223 )
+    pet1 = Pet.create(image: "https://ichef.bbci.co.uk/wwfeatures/live/976_549/images/live/p0/7z/n7/p07zn7p7.jpg",
+                      name: "Milo",
+                      age: "2",
+                      sex: "Male",
+                      description: "yolo",
+                      status: "Adoptable",
+                      shelter_id: shelter1.id)
+  visit "/shelters"
+  click_link(shelter1.name, match: :first)
+  expect(current_path).to eq("/shelters/#{shelter1.id}")
 
+  visit "/pets"
+  click_link(shelter1.name, match: :first)
+  expect(current_path).to eq("/shelters/#{shelter1.id}")
+  end
+end

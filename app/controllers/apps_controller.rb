@@ -6,7 +6,6 @@ class AppsController < ApplicationController
 
   def index
     @applications = Application.all
-    # require "pry"; binding.pry
   end
 
   def create
@@ -31,36 +30,12 @@ class AppsController < ApplicationController
     @app = Application.find(params[:id])
   end
 
-  # def update
-  #   # require "pry"; binding.pry
-  #   pets_approved = params[:pet_ids]
-  #   @app = Application.find(params[:id])
-  #   pets_approved.each do |pet_id|
-  #     pet = Pet.find(pet_id)
-  #     if pet.pet_applications.any? { |app| app.approved == true }
-  #       flash[:notice] = "No more applications can be approved for this pet at this time."
-  #     else
-  #     pet.update(status: "Pending")
-  #     pet_app = pet.pet_applications.find_by(application_id: params[:id])
-  #     pet_app.update(approved: true)
-  #     # PetApplication.find_by(pet_id: pet_id, application_id: params[:id])
-  #     end
-  #   end
-  #   if pets_approved.length > 1
-  #     redirect_to "/pets"
-  #   else
-  #     pet_id = pets_approved.first.to_i
-  #     pet = Pet.find(pet_id)
-  #     redirect_to "/pets/#{pet.id}"
-  #   end
-  # end
+  
   def update
     @app = Application.find(params[:id])
     pet = Pet.find(params[:pet_id])
-    # pet_app = PetApplication.where(application_id: @app.id).first
     pet_app = PetApplication.find_by(pet_id: params[:pet_id], application_id: params[:id])
-    # pet = Pet.where(id: pet_app.pet_id)
-    # require "pry"; binding.pry
+  
     if pet.pet_applications.any? { |app| app.approved == true }
       flash[:notice] = "No more applications can be approved for this pet at this time."
       redirect_to "/applications/#{@app.id}"
@@ -74,21 +49,12 @@ class AppsController < ApplicationController
 
   def unapprove
     @app = Application.find(params[:id])
-    pet_app = PetApplication.where(application_id: @app.id).first #need to change .first if we do single(or multi)
-    # require "pry"; binding.pry
-    pet = Pet.where(id: pet_app.pet_id)
+    pet = Pet.find(params[:pet_id])
+    pet_app = PetApplication.find_by(pet_id: params[:pet_id], application_id: params[:id])
     pet_app.update(approved: false)
     pet.update(status: "Adoptable")
-
     redirect_to "/applications/#{@app.id}"
-
   end
-  # def change_status
-  #   @app = Application.find(params[:id])
-  #   binding.pry
-  # end
-
-
 
   private
 

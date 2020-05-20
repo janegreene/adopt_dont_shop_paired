@@ -34,6 +34,11 @@ RSpec.describe "When I have add pets to my favorites list" do
                         status: "Adoptable")
     end
 
+    after(:each) do
+      Pet.destroy_all
+      Shelter.destroy_all
+    end
+
     it "can see my favorited pets and their info" do
 
       visit "/pets/#{@pet1.id}"
@@ -53,7 +58,10 @@ RSpec.describe "When I have add pets to my favorites list" do
       expect(current_path).to eq("/favorites")
       expect(page).to have_content(@pet1.name)
       expect(page).to have_content(@pet2.name)
-      expect(page).to_not have_content(@pet3.name)
+
+      within ".favorites" do
+        expect(page).to_not have_content(@pet3.name)
+      end
     end
 
 
@@ -74,7 +82,10 @@ RSpec.describe "When I have add pets to my favorites list" do
 
       click_button("Remove Favorite", match: :first)
       expect(current_path).to eq("/favorites")
-      expect(page).to_not have_content(@pet1.name)
+
+      within ".favorites" do
+       expect(page).to_not have_content(@pet1.name)
+      end
   end
 
   describe "when I have no favorite pets" do
@@ -104,9 +115,11 @@ RSpec.describe "When I have add pets to my favorites list" do
     click_link "Remove All Favorited Pets"
 
     expect(current_path).to eq("/favorites")
+    within ".favorites" do
     expect(page).to have_content("You have no favorited pets.")
     expect(page).to_not have_link("Remove All Favorited Pets")
   end
+end
 
   it "List of Pets that have applications on them" do
     application = Application.create(name: "Will Rogers",
@@ -116,7 +129,7 @@ RSpec.describe "When I have add pets to my favorites list" do
     visit "/favorites"
 
       within(".apps") do
-        have_link "#{@pet1.name}", href: "/pets/#{@pet1.id}"
+        expect(page).to have_link("#{@pet1.name}")
       end
     end
   end

@@ -11,4 +11,9 @@ class Pet < ApplicationRecord
    end
   end
 
+  def pet_applicant
+    id = self.applications.select(:id).where('pet_applications.approved')
+    id.pluck(:id).first
+  end
+
 end

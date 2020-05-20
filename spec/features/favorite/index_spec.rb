@@ -116,10 +116,10 @@ RSpec.describe "When I have add pets to my favorites list" do
 
     expect(current_path).to eq("/favorites")
     within ".favorites" do
-      expect(page).to have_content("You have no favorited pets.")
-      expect(page).to_not have_link("Remove All Favorited Pets")
-    end
+    expect(page).to have_content("You have no favorited pets.")
+    expect(page).to_not have_link("Remove All Favorited Pets")
   end
+end
 
   it "List of Pets that have applications on them" do
     application = Application.create(name: "Will Rogers",
@@ -129,7 +129,7 @@ RSpec.describe "When I have add pets to my favorites list" do
     visit "/favorites"
 
       within(".apps") do
-        have_link "#{@pet1.name}", href: "/pets/#{@pet1.id}"
+        expect(page).to have_link("#{@pet1.name}")
       end
     end
   end

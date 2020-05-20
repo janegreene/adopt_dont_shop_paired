@@ -30,9 +30,12 @@ RSpec.describe "the Application new page" do
     @application2 = Application.create(name: "Roger Will",
       address: "132 Maple Dr.", city: "Claremore", state: "OK", zip: 74014, phone: "918-233-9000",
       description: "great fenced yard", pet_ids: ["#{@pet1.id}"])
-
   end
 
+  after(:each) do
+    Pet.destroy_all
+    Shelter.destroy_all
+  end
   it "can see all attributes of application" do
     visit "/applications/#{@application.id}"
 
@@ -45,6 +48,8 @@ RSpec.describe "the Application new page" do
     expect(page).to have_content("918-233-9000")
     have_link 'Milo', href: "/pets/#{@pet1.id}"
     have_link 'Otis', href: "/pets/#{@pet2.id}"
+
+    expect(page).to have_no_content("Roger Will")
   end
 
   it "can click a link to approve the application" do
@@ -53,7 +58,10 @@ RSpec.describe "the Application new page" do
     expect(current_path).to eq("/pets/#{@pet1.id}")
     expect(page).to have_content("Adoption Status: Pending")
     expect(page).to have_content("On hold for: #{@application2.name}")
+
+    expect(page).to have_no_content("On hold for: #{@application.name}")
   end
+
   it "can click a link to approve the application v2" do
 
     visit "/applications/#{@application.id}"
@@ -63,6 +71,8 @@ RSpec.describe "the Application new page" do
     expect(current_path).to eq("/pets/#{@pet1.id}")
     expect(page).to have_content("Adoption Status: Pending")
     expect(page).to have_content("On hold for: #{@application.name}")
+
+    expect(page).to have_no_content("On hold for: #{@application2.name}")
   end
 
   it "Pets can only have one approved application on them at a time" do
@@ -77,6 +87,7 @@ RSpec.describe "the Application new page" do
     visit "/applications/#{application2.id}"
     expect(page).not_to have_content("Approve Application for Milo")
   end
+  
   it "approved applications can be revoked" do
     application2 = Application.create(name: "Bill Rogers",
       address: "132 Maple Dr.", city: "Claremore", state: "OK", zip: 74014, phone: "918-233-9000",
@@ -92,12 +103,12 @@ RSpec.describe "the Application new page" do
 
     visit "/pets/#{@pet1.id}"
     expect(page).to have_content("Adoptable")
+    expect(page).to have_no_content("Pending")
   end
   it "anywhere an applicant name appears it is a link to show page" do
 
-  visit "pets/#{@pet1.id}/applications"
-  click_link(@application.name, match: :first)
-  expect(current_path).to eq("/applications/#{@application.id}")
-
+    visit "pets/#{@pet1.id}/applications"
+    click_link(@application.name, match: :first)
+    expect(current_path).to eq("/applications/#{@application.id}")
   end
 end

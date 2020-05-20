@@ -1,14 +1,14 @@
 <div class="container">
   <h1>Available Pets</h1>
 
-<% @pets.each do |pet| %>
-<img src = "<%= pet.image %>" alt:="<%= pet.name %>" <br/><br/>
-<h2><%= link_to "#{pet.name}", "/pets/#{pet.id}" %> </h2>
-<%= link_to 'Update Pet', "/pets/#{pet.id}/edit" %> |
-<%= link_to  "Delete Pet", "/pets/#{pet.id}", method: :delete, data: {confirm: "Confirm Pet Deletion"} %><br/>
-<p> <b>Age:</b> <%= pet.age %> </p>
-<p> <b>Sex:</b> <%= pet.sex %> </p>
-<% end %>
-
-<br/>
-<a href= "/shelters/<%=@shelter.id%>/pets/new">Create Pet</a>
+  <% @pets.each do |pet| %>
+    <img src = "<%= pet.image %>" alt:="<%= pet.name %>" <br/><br/>
+    <h2><%= link_to "#{pet.name}", "/pets/#{pet.id}" %> </h2>
+    <%= link_to 'Update Pet', "/pets/#{pet.id}/edit" %> |
+    <%= link_to  "Delete Pet", "/pets/#{pet.id}", method: :delete, data: {confirm: "Confirm Pet Deletion"} %><br/>
+    <p> <b>Age:</b> <%= pet.age %> </p>
+    <p> <b>Sex:</b> <%= pet.sex %> </p>
+  <% end %><br/>
+  
+  <a href= "/shelters/<%=@shelter.id%>/pets/new">Create Pet</a>
+</div>

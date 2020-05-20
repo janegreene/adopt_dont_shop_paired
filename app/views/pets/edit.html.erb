@@ -1,21 +1,22 @@
 <div class="form_container">
-<h1>Update Pet</h1>
-<%= form_tag "/pets/#{@pet.id}", method: :patch do %>
+  <h1>Update Pet</h1>
+  <%= form_tag "/pets/#{@pet.id}", method: :patch do %>
 
-  <%= label_tag :image, "Image URL" %><br>
-  <%= text_field_tag :image, "#{@pet.image}"%><br>
+      <%= label_tag :image, "Image URL" %><br>
+      <%= text_field_tag :image, "#{@pet.image}"%><br>
 
-  <%= label_tag :name %><br>
-  <%= text_field_tag :name, "#{@pet.name}"%><br>
+      <%= label_tag :name %><br>
+      <%= text_field_tag :name, "#{@pet.name}"%><br>
 
-  <%= label_tag :description %><br>
-  <%= text_field_tag :description, "#{@pet.description}"%><br>
+      <%= label_tag :description %><br>
+      <%= text_field_tag :description, "#{@pet.description}"%><br>
 
-  <%= label_tag :age, "Approximate Age" %><br>
-  <%= text_field_tag :age, "#{@pet.age}"%><br>
+      <%= label_tag :age, "Approximate Age" %><br>
+      <%= text_field_tag :age, "#{@pet.age}"%><br>
 
-  <%= label_tag :sex %><br>
-  <%= text_field_tag :sex, "#{@pet.sex}"%><br>
+      <%= label_tag :sex %><br>
+      <%= text_field_tag :sex, "#{@pet.sex}"%><br>
 
-<%= submit_tag "Submit Update" %>
-<% end %>
+    <%= submit_tag "Submit Update" %>
+  <% end %>
+</div>

@@ -51,6 +51,7 @@ RSpec.describe "the Application new page" do
 
     expect(current_path).to eq("/favorites")
     expect(page).to have_content("You have submitted your application to adopt.") #needs rework
+    expect(page).to have_no_content("Application not submitted: Required information missing.")
     
     within '.favorites' do
       expect(page).to_not have_content("#{@pet1.name}")

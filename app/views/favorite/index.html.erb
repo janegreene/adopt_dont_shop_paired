@@ -1,20 +1,20 @@
 <div class="container">
   <div class="favorites">
-<h1>Favorite Pets</h1>
- <% if favorite.favorite_pets.empty? %>
-    <p class="bold">You have no favorited pets.</p>
-  <% else %>
-    <% favorite.favorite_pets.each do |pet| %>
+    <h1>Favorite Pets</h1>
+    <% if favorite.favorite_pets.empty? %>
+      <p><b>You have no favorited pets.</p></b>
+    <% else %>
+      <% favorite.favorite_pets.each do |pet| %>
         <div class="pet_container-<%= pet.id %>"><div class="column"><br/>
         <img src = "<%= pet.image %>" alt:="<%= pet.name %>" <br/>
         <h2><%= link_to "#{pet.name}", "/pets/#{pet.id}" %> </h2>
-        <%= button_to "Remove Favorite", "/favorites/#{pet.id}?page=favorites", method: :delete %>
-<% end %></div>
+        <%= button_to "Remove Favorite", "/favorites/#{pet.id}?page=favorites", method: :delete %><br/>
+      <% end %>
+    <% end %>
+  </div>
 
-
-<%= link_to "Adopt Favorite Pets", "/applications/new" %>
-<%= link_to "Remove All Favorited Pets", "/favorites", method: :delete %>
-<% end %></div>
+<%= link_to "Adopt Favorite Pets", "/applications/new" %> | <%= link_to "Remove All Favorited Pets", "/favorites", method: :delete %>
+</div>
 </div>
 <div class="apps">
 <h2> Applications </h2>

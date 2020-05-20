@@ -74,21 +74,22 @@ class AppsController < ApplicationController
 
   def unapprove
     @app = Application.find(params[:id])
-    pet_app = PetApplication.where(application_id: @app.id).first #need to change .first if we do single(or multi)
-    # require "pry"; binding.pry
-    pet = Pet.where(id: pet_app.pet_id)
+    pet = Pet.find(params[:pet_id])
+    pet_app = PetApplication.find_by(pet_id: params[:pet_id], application_id: params[:id])
     pet_app.update(approved: false)
     pet.update(status: "Adoptable")
-
     redirect_to "/applications/#{@app.id}"
-
   end
-  # def change_status
+
+  # def unapprove
   #   @app = Application.find(params[:id])
-  #   binding.pry
-  # end
+  #   pet_app = PetApplication.where(application_id: @app.id).first #need to change .first if we do single(or multi)
+  #   # require "pry"; binding.pry
+  #   pet = Pet.where(id: pet_app.pet_id)
+  #   pet_app.update(approved: false)
+  #   pet.update(status: "Adoptable")
 
-
+  #   redirect_to "/applications/#{@app.id}"
 
   private
 

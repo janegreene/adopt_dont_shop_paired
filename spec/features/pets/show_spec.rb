@@ -125,7 +125,7 @@ RSpec.describe "view pet show page", type: feature do
   it "anywhere a pet name appears it is a link to show page" do
 
   visit "/pets"
-  save_and_open_page
+  
   click_link(@pet1.name)
   expect(current_path).to eq("/pets/#{@pet1.id}")
 

@@ -9,7 +9,7 @@
         <img src = "<%= pet.image %>" alt:="<%= pet.name %>" <br/>
         <h2><%= link_to "#{pet.name}", "/pets/#{pet.id}" %> </h2>
         <%= button_to "Remove Favorite", "/favorites/#{pet.id}?page=favorites", method: :delete %>
-<% end %>
+<% end %></div>
 
 
 <%= link_to "Adopt Favorite Pets", "/applications/new" %>

@@ -58,7 +58,10 @@ RSpec.describe "When I have add pets to my favorites list" do
       expect(current_path).to eq("/favorites")
       expect(page).to have_content(@pet1.name)
       expect(page).to have_content(@pet2.name)
-      expect(page).to_not have_content(@pet3.name)
+
+      within ".favorites" do
+        expect(page).to_not have_content(@pet3.name)
+      end
     end
 
 
@@ -79,7 +82,10 @@ RSpec.describe "When I have add pets to my favorites list" do
 
       click_button("Remove Favorite", match: :first)
       expect(current_path).to eq("/favorites")
-      expect(page).to_not have_content(@pet1.name)
+
+      within ".favorites" do
+       expect(page).to_not have_content(@pet1.name)
+      end
   end
 
   describe "when I have no favorite pets" do
@@ -109,8 +115,10 @@ RSpec.describe "When I have add pets to my favorites list" do
     click_link "Remove All Favorited Pets"
 
     expect(current_path).to eq("/favorites")
-    expect(page).to have_content("You have no favorited pets.")
-    expect(page).to_not have_link("Remove All Favorited Pets")
+    within ".favorites" do
+      expect(page).to have_content("You have no favorited pets.")
+      expect(page).to_not have_link("Remove All Favorited Pets")
+    end
   end
 
   it "List of Pets that have applications on them" do

@@ -58,6 +58,7 @@ RSpec.describe "when I go to the shelter pets index page" , type: feature do
         expect(page).to have_content(@pet2.age)
         expect(page).to have_content(@pet2.sex)
       end
+
     it "incomplete form receives flash message" do
 
      visit "/shelters/#{@shelter1.id}/pets"

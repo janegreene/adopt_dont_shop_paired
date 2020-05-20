@@ -50,6 +50,7 @@ RSpec.describe "view pet show page", type: feature do
     expect(page).to have_content(@pet1.name)
     expect(page).to have_content(@pet1.age)
     expect(page).to have_content(@pet1.sex)
+    expect(page).to have_no_content(@pet2.name)
   end
 
   it "can favorite a pet" do
@@ -82,7 +83,9 @@ RSpec.describe "view pet show page", type: feature do
     expect(current_path).to eq("/pets/#{@pet1.id}")
     expect(page).to have_content("Adorable, fluffy, small white dog")
     expect(page).to have_content("3")
+    expect(page).to have_no_content("Pet 1")
   end
+
   it "incomplete form update for pet gives error" do
 
     visit "/pets/#{@pet1.id}"
@@ -101,6 +104,7 @@ RSpec.describe "view pet show page", type: feature do
     expect(current_path).to eq("/pets/#{@pet1.id}/edit")
     expect(page).to have_content("Sex can't be blank")
   end
+
   it "deleting a favorited pet also removes it from favorites" do
     visit "/pets/#{@pet1.id}"
     click_button "Favorite Pet"
@@ -109,6 +113,7 @@ RSpec.describe "view pet show page", type: feature do
     expect(current_path).to eq("/pets")
     expect(page).to have_content("Favorite Pets: 0")
   end
+
   it "can not delete pets with approved apps" do
     pet2 = Pet.create(image: "https://cdn.akc.org/content/hero/lab_owner_hero.jpg",
                       name: "Ralph",
@@ -118,33 +123,28 @@ RSpec.describe "view pet show page", type: feature do
                       status: "Pending",
                       shelter_id: @shelter1.id)
 
-  visit "/pets/#{pet2.id}"
-  click_link 'Delete Pet'
-  expect(page).to have_content("Adoption pending, cannot delete pet.")
+    visit "/pets/#{pet2.id}"
+    click_link 'Delete Pet'
+    expect(page).to have_content("Adoption pending, cannot delete pet.")
   end
+
   it "anywhere a pet name appears it is a link to show page" do
 
-  visit "/pets"
-  
-  click_link(@pet1.name)
-  expect(current_path).to eq("/pets/#{@pet1.id}")
+    visit "/pets"
+    
+    click_link(@pet1.name)
+    expect(current_path).to eq("/pets/#{@pet1.id}")
 
-  visit "/shelters/#{@shelter1.id}/pets"
-  click_link(@pet1.name)
-  expect(current_path).to eq("/pets/#{@pet1.id}")
+    visit "/shelters/#{@shelter1.id}/pets"
+    click_link(@pet1.name)
+    expect(current_path).to eq("/pets/#{@pet1.id}")
 
-  visit "/pets/#{@pet1.id}"
-  click_button "Favorite Pet"
+    visit "/pets/#{@pet1.id}"
+    click_button "Favorite Pet"
 
-  click_link 'Favorite Pets: 1'
-  expect(current_path).to eq("/favorites")
-  click_link(@pet1.name)
-  expect(current_path).to eq("/pets/#{@pet1.id}")
+    click_link 'Favorite Pets: 1'
+    expect(current_path).to eq("/favorites")
+    click_link(@pet1.name)
+    expect(current_path).to eq("/pets/#{@pet1.id}")
   end
 end
-# User Story 32, Deleting a pet removes it from favorites
-#
-# As a visitor
-# If I've added a pet to my favorites
-# When I try to delete that pet from the database
-# They are also removed from the favorites list

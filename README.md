@@ -19,3 +19,5 @@ Testing:
 Description:
 
 * Users are able to create, update, delete, and view pets, shelters, and reviews. Users are also able to submit and be approved for applications for multiple pets. 
+* Applied RESTful routes using MVC
+* Implemented a session to track 'favorite pets'

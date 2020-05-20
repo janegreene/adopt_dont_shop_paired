@@ -1,33 +1,34 @@
 <% @shelter = Shelter.find(params[:id]) %>
 <div class="container">
 
+  <h1><%= link_to "#{@shelter.name}", "/shelters/#{@shelter.id}" %></h1>
+  <%= link_to "View all pets from #{@shelter.name}", "/shelters/#{@shelter.id}/pets" %>
+  <p><b>Address:</b> <%= @shelter.address %></p>
+  <p><b>City:</b> <%= @shelter.city %></p>
+  <p><b>State:</b> <%= @shelter.state %></p>
+  <p><b>Zip:</b> <%= @shelter.zip %></p>
 
-<h1><%= link_to "#{@shelter.name}", "/shelters/#{@shelter.id}" %></h1>
-<%= link_to "View all pets from #{@shelter.name}", "/shelters/#{@shelter.id}/pets" %>
-<p><b>Address:</b> <%= @shelter.address %></p>
-<p><b>City:</b> <%= @shelter.city %></p>
-<p><b>State:</b> <%= @shelter.state %></p>
-<p><b>Zip:</b> <%= @shelter.zip %></p>
-
-<%= link_to 'Review', "/shelters/#{@shelter.id}/review" %>
-<%= link_to 'Update Shelter', "/shelters/#{@shelter.id}/edit" %> |
-<%= link_to  "Delete Shelter", "/shelters/#{@shelter.id}", method: :delete, data: {confirm: "Confirm Sheleter Deletion"} %></br>
-<% @shelter.reviews.each do |review| %>
-<div class="review-<%= review.id %>" >
-<p> <b>Title:</b> <%= review.title %> </p>
-<p> <b>Rating:</b> <%= review.rating%> </p>
-<p> <b>Content:</b> <%= review.content%> </p>
-<%= image_tag review.image, id: "review-avatar-#{review.id}"%>
-<%= link_to "Edit Review", "/shelters/#{@shelter.id}/#{review.id}/edit" %> |
-<%= link_to "Delete Review", "/shelters/#{@shelter.id}/#{review.id}", method: :delete, data: {confirm: "Confirm Review Deletion"} %></br>
+  <%= link_to 'Review', "/shelters/#{@shelter.id}/review" %>
+  <%= link_to 'Update Shelter', "/shelters/#{@shelter.id}/edit" %> |
+  <%= link_to  "Delete Shelter", "/shelters/#{@shelter.id}", method: :delete, data: {confirm: "Confirm Sheleter Deletion"} %></br>
+  
+  <% @shelter.reviews.each do |review| %>
+    <div class="review-<%= review.id %>" >
+    <p> <b>Title:</b> <%= review.title %> </p>
+    <p> <b>Rating:</b> <%= review.rating%> </p>
+    <p> <b>Content:</b> <%= review.content%> </p>
+    <%= image_tag review.image, id: "review-avatar-#{review.id}"%>
+    <%= link_to "Edit Review", "/shelters/#{@shelter.id}/#{review.id}/edit" %> |
+    <%= link_to "Delete Review", "/shelters/#{@shelter.id}/#{review.id}", method: :delete, data: {confirm: "Confirm Review Deletion"} %></br>
+  <% end %>
 </div>
-<% end %>
 
-<div class="statistics">
+  <div class="statistics">
     <h2>Shelter Statistics</h2>
     <b>Number of Pets: </b><%= @shelter.pet_count %> <br/>
     <b>Number of Applications: </b><%= @shelter.app_count %> <br/>
     <b>Average Rating: </b><%= @shelter.avg_rating %>
-</div>
+  </div>
 
-<%= link_to 'Back to All Shelters', "/shelters" %></div>
+  <%= link_to 'Back to All Shelters', "/shelters" %>
+</div>

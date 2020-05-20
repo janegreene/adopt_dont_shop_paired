@@ -139,24 +139,4 @@ RSpec.describe "From a shelter show page", type: feature do
     expect(page).to have_no_content(pet1.name)
     expect(page).to have_no_content(pet2.name)
   end
-
 end
-# User Story 26, Shelters with Pets that have pending status cannot be Deleted
-#
-# As a visitor
-# If a shelter has approved applications for any of their pets
-# I can not delete that shelter
-# Either:
-# - there is no button visible for me to delete the shelter
-# - if I click on the delete link for deleting a shelter, I see a flash message
-#   indicating that the shelter can not be deleted.
-
-
-# User Story 30, Shelter Statistics
-
-# As a visitor
-# When I visit a shelter's show page
-# I see statistics for that shelter, including:
-# - count of pets that are at that shelter
-# - average shelter review rating
-# - number of applications on file for that shelter

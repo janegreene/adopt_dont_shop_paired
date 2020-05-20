@@ -1,21 +1,19 @@
 <div class="form_container">
+  <p><b>Name:</b> <%= @app.name %></p>
+  <p><b>Address:</b> <%= @app.address %></p>
+  <p><b>City:</b> <%= @app.city %></p>
+  <p><b>State:</b> <%= @app.state %></p>
+  <p><b>Zip:</b> <%= @app.zip %></p>
+  <p><b>Phone:</b> <%= @app.phone %></p>
+  <p><b>Description:</b> <%= @app.description %></p>
 
-<p><b>Name:</b> <%= @app.name %></p>
-<p><b>Address:</b> <%= @app.address %></p>
-<p><b>City:</b> <%= @app.city %></p>
-<p><b>State:</b> <%= @app.state %></p>
-<p><b>Zip:</b> <%= @app.zip %></p>
-<p><b>Phone:</b> <%= @app.phone %></p>
-<p><b>Description:</b> <%= @app.description %></p>
-
-<% @app.pets.each do |pet| %>
-      <% if pet.on_hold_for == nil %>
-        <%= button_to "Approve Application for #{pet.name}", "/applications/#{@app.id}/update", method: :patch, params: {pet_id: pet.id} %>
-      <% else %>
-       <% if pet.on_hold_for == @app.name %>
-        <%= button_to "Unapprove Application for #{pet.name}", "/applications/#{@app.id}/unapprove", method: :patch, params: {pet_id: pet.id} %>
-       <% end %>
-       <% end %>
-       <% end %>
-
+  <% @app.pets.each do |pet| %>
+    <% if pet.on_hold_for == nil %>
+       <%= button_to "Approve Application for #{pet.name}", "/applications/#{@app.id}/update", method: :patch, params: {pet_id: pet.id} %>
+    <% else %>
+      <% if pet.on_hold_for == @app.name %>
+          <%= button_to "Unapprove Application for #{pet.name}", "/applications/#{@app.id}/unapprove", method: :patch, params: {pet_id: pet.id} %>
+      <% end %>
+    <% end %>
+  <% end %>
 </div>

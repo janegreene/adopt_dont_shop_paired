@@ -1,26 +1,27 @@
 <div class="container"><br/>
-<% if !@pet.on_hold_for.nil?%>
-<b>On hold for: <%= link_to "#{@pet.on_hold_for}", "/applications/#{@pet.pet_applicant}"  %></b>
-<% end %>
+  <% if !@pet.on_hold_for.nil?%>
+    <b>On hold for: <%= link_to "#{@pet.on_hold_for}", "/applications/#{@pet.pet_applicant}"  %></b>
+  <% end %>
 
-<div class="row">
-  <div class="pet_container-<%= @pet.id %>"><div class="column"><br/>
-    <img class = "pet_img" src = "<%= @pet.image %>" alt:="<%= @pet.name %>" <br/>
+  <div class="row">
+    <div class="pet_container-<%= @pet.id %>"><div class="column"><br/>
+      <img class = "pet_img" src = "<%= @pet.image %>" alt:="<%= @pet.name %>" <br/>
+      <h2><%= link_to "#{@pet.name}", "/pets/#{@pet.id}" %> </h2></div>
 
-    <h2><%= link_to "#{@pet.name}", "/pets/#{@pet.id}" %> </h2></div>
+  <div class="column-<%= @pet.id %>"><p><b>Description:</b> <%= @pet.description %></p>
+    <p><b>Age:</b> <%= @pet.age %></p>
+    <p><b>Sex:</b> <%= @pet.sex %></p>
+    <p><b>Adoption Status:</b> <%= @pet.status %></p>
 
-<div class="column-<%= @pet.id %>"><p><b>Description:</b> <%= @pet.description %></p>
-<p><b>Age:</b> <%= @pet.age %></p>
-<p><b>Sex:</b> <%= @pet.sex %></p>
-<p><b>Adoption Status:</b> <%= @pet.status %></p>
-
-<%= link_to "Update Pet", "/pets/#{@pet.id}/edit" %> |
-<%= link_to "Delete Pet", "/pets/#{@pet.id}", method: :delete, data: {confirm: "Confirm Pet Deletion"} %> |
-<%= link_to "View all Applications", "/pets/#{@pet.id}/applications" %> |
-<%= link_to 'Back to All Pets', "/pets" %>
-<% if favorite.contents[@pet.id.to_s].nil? || favorite.contents[@pet.id.to_s] == 0 %>
-      <%= button_to "Favorite Pet", "/favorites/#{@pet.id}", method: :patch %>
-  <% else %>
-    <%= button_to "Remove From Favorites", "/favorites/#{@pet.id}?page=show", method: :delete %>
-
-  <% end %></div>
+    <%= link_to "Update Pet", "/pets/#{@pet.id}/edit" %> |
+    <%= link_to "Delete Pet", "/pets/#{@pet.id}", method: :delete, data: {confirm: "Confirm Pet Deletion"} %> |
+    <%= link_to "View all Applications", "/pets/#{@pet.id}/applications" %> |
+    <%= link_to 'Back to All Pets', "/pets" %>
+      <% if favorite.contents[@pet.id.to_s].nil? || favorite.contents[@pet.id.to_s] == 0 %>
+        <%= button_to "Favorite Pet", "/favorites/#{@pet.id}", method: :patch %>
+      <% else %>
+        <%= button_to "Remove From Favorites", "/favorites/#{@pet.id}?page=show", method: :delete %>
+      <% end %>
+    </div>
+  </div>
+</div>

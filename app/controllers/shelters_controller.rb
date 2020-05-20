@@ -16,7 +16,6 @@ class SheltersController < ApplicationController
         redirect_to '/shelters'
     else
         flash.now[:notice] = shelter.errors.full_messages.join(". ").to_s
-      # flash.now[:notice] = "Sheleter not created. Required information missing: Address"
         render :new
     end
   end

@@ -1,18 +1,19 @@
 <div class="form_container">
-<h1>Edit Review</h1>
-<%= form_tag "/shelters/#{@review.shelter_id}/#{@review.id}", method: :patch do %>
+  <h1>Edit Review</h1>
+  <%= form_tag "/shelters/#{@review.shelter_id}/#{@review.id}", method: :patch do %>
 
-  <%= label_tag :title, "Title" %><br>
-  <%= text_field_tag :title, "#{@review.title}" %><br>
+      <%= label_tag :title, "Title" %><br>
+      <%= text_field_tag :title, "#{@review.title}" %><br>
 
-  <%= label_tag :rating, "Rating" %><br>
-  <%= text_field_tag :rating, "#{@review.rating}"%><br>
+      <%= label_tag :rating, "Rating" %><br>
+      <%= text_field_tag :rating, "#{@review.rating}"%><br>
 
-  <%= label_tag :content, "Content" %><br>
-  <%= text_field_tag :content, "#{@review.content}"%><br>
+      <%= label_tag :content, "Content" %><br>
+      <%= text_field_tag :content, "#{@review.content}"%><br>
 
-  <%= label_tag :image, "Image URL" %><br>
-  <%= text_field_tag :image, "#{@review.image}"%><br>
+      <%= label_tag :image, "Image URL" %><br>
+      <%= text_field_tag :image, "#{@review.image}"%><br>
 
-<%= submit_tag "Submit Review" %>
-<% end %>
+    <%= submit_tag "Submit Review" %>
+  <% end %>
+</div>

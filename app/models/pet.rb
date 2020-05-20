@@ -11,4 +11,9 @@ class Pet < ApplicationRecord
    end
   end
 
+  # def pet_applicant
+  #   # binding.pry
+  #   self.applications.select(:id).where('pet_applications.approved')
+  # end
+
 end

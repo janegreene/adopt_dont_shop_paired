@@ -4,9 +4,9 @@ class AppsController < ApplicationController
     @favorites = favorite.favorite_pets
   end
 
-  def index
-    @applications = Application.all
-  end
+  # def index
+  #   @applications = Application.all
+  # end
 
   def create
     application = Application.new(app_params)
@@ -36,16 +36,16 @@ class AppsController < ApplicationController
     pet = Pet.find(params[:pet_id])
     pet_app = PetApplication.find_by(pet_id: params[:pet_id], application_id: params[:id])
   
-    if pet.pet_applications.any? { |app| app.approved == true }
-      flash[:notice] = "No more applications can be approved for this pet at this time."
-      redirect_to "/applications/#{@app.id}"
-    else
+    # if pet.pet_applications.any? { |app| app.approved == true }
+    #   flash[:notice] = "No more applications can be approved for this pet at this time."
+    #   redirect_to "/applications/#{@app.id}"
+    # else
       pet.update(status: "Pending")
       pet_app = pet.pet_applications.find_by(application_id: params[:id])
       pet_app.update(approved: true)
       redirect_to "/pets/#{pet.id}"
     end
-  end
+  # end
 
   def unapprove
     @app = Application.find(params[:id])

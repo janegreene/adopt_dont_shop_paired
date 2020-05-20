@@ -36,6 +36,23 @@ RSpec.describe "from shelter show page" do
     page.find("#review-avatar-#{review_1.id}")['src'].should have_content review_1.image
   end
 
+  it "can't add a review without required fields" do
+
+    visit "/shelters/#{@shelter.id}"
+
+    click_link "Review"
+    expect(current_path).to eq("/shelters/#{@shelter.id}/review")
+
+    fill_in "Title", with: ""
+    fill_in "Rating", with:  4
+    fill_in "Content", with: "Oddly smells like mustard."
+    fill_in "Image", with: "https://canineweekly.com/wp-content/uploads/2017/10/big-fluffy-dog-breeds-1024x683.jpg"
+
+    click_button "Submit Review"
+    expect(current_path).to eq("/shelters/#{@shelter.id}/review")
+    expect(page).to have_content("Review not created: Required information missing.")
+  end
+
   it "see a link to edit the shelter review next to each review" do
 
     visit "/shelters/#{@shelter.id}"

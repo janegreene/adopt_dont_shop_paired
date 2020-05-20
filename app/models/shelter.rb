@@ -8,6 +8,8 @@ class Shelter < ApplicationRecord
   end
 
   def app_count
+    pet_ids = pets.pluck(:id)
+    PetApplication.where(pet_id: pet_ids).select(:application_id).distinct.count
   end
 
   def avg_rating
